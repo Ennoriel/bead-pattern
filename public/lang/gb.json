@@ -1,0 +1,13 @@
+{
+    "label-bracelet-droit": "Linear weaving",
+    "label-bracelet-deyote": "Peyote weaving",
+    "label-bracelet-peyote-v": "Vertical Peyote weaving",
+    "label-create-bracelet": "New",
+    "label-generate-pattern": "Add a patern",
+    "label-download": "Save",
+    "label-upload": "Load",
+    "label-focus-display": "Focus display",
+    "label-unfocus-display": "Work display",
+
+    "placeholder-import-input": "Copy the saved string"
+}

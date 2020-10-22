@@ -1,0 +1,53 @@
+/* Common stuff */
+.picker-wrapper, 
+.slide-wrapper {
+    position: relative;
+    float: left;
+}
+.picker-indicator,
+.slide-indicator {
+    position: absolute;
+    left: 0;
+    top: 0;
+    pointer-events: none;
+}
+.picker,
+.slide {
+    cursor: crosshair;
+    float: left;
+}
+
+/* Default skin */
+
+.cp-default {
+    background-color: lightgray;
+    padding: 10px;
+    float: left;
+    position: absolute;
+    bottom: 50px;
+    right: 120px;
+}
+.cp-default .picker {
+    width: 200px;
+    height: 200px;
+}
+.cp-default .slide {
+    width: 30px;
+    height: 200px;
+}
+.cp-default .slide-wrapper {
+    margin-left: 10px;
+}
+.cp-default .picker-indicator {
+    width: 5px;
+    height: 5px;
+    border: 1px solid black;
+    border-radius: 4px;
+}
+.cp-default .slide-indicator {
+    width: 100%;
+    height: 4px;
+    left: -1px;
+    border: 1px solid black;
+    border-radius: 4px;
+}
