@@ -3,7 +3,7 @@ function main() {
     initMouse();
     initTissage();
     initDimension();
-    initFactory();
+    initFactory(); 
     initColorPicker();
     loadLanguage('fr');
 }
@@ -37,8 +37,8 @@ function computeWidthHint() {
 }
 
 function initDimension() {
-    document.getElementById("input-largeur").value = 5;
-    document.getElementById("input-longueur").value = 40;
+    document.getElementById("input-largeur").value = 6;
+    document.getElementById("input-longueur").value = 6;
     
     computeLengthHint();
     computeWidthHint();

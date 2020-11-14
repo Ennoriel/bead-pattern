@@ -191,7 +191,7 @@ class Trame {
             } else if (rightClickPressed) {
                 perle.value = '';
                 this.handlePerle(perle);
-            } else /* no click */ {
+            } else /* no click = fast pattern rendering */ {
                 if(pinceau.includes('pattern-')) {
                     this.computeAndRenderPreview(perle);
                 }
@@ -201,6 +201,8 @@ class Trame {
 
     copyPatternToTab(perle, preview = false) {
         let patternNb = parseInt(pinceau.charAt(8));
+        let patternStartingPoint = pinceau.substring(10, 12);
+
         let iRowBegin = parseInt(perle.getAttribute('row-nb'));
         let iRowEnd = Math.min(
                     iRowBegin + factory.patterns[patternNb].dimension.width,
@@ -209,16 +211,42 @@ class Trame {
         let iColEnd = Math.min(
                     iColBegin + factory.patterns[patternNb].dimension.length,
                     this.dimension.length);
+        // index deltas between the bracelet and the pattern
+        let deltaCol = iColBegin
+        let deltaRow = iRowBegin
+
+        if(patternStartingPoint === 'br') {
+
+            iRowEnd = 1 + parseInt(perle.getAttribute('row-nb'));
+            iRowBegin = Math.max(
+                        iRowEnd - factory.patterns[patternNb].dimension.width,
+                        0);
+            iColEnd = 1 + parseInt(perle.getAttribute('col-nb'));
+            iColBegin = Math.max(
+                        iColEnd - factory.patterns[patternNb].dimension.length,
+                        0);
+            deltaCol = iColEnd - factory.patterns[patternNb].dimension.width;
+            deltaRow = iRowEnd - factory.patterns[patternNb].dimension.length;
+        }
+
         if(tissage === TISSAGE.DROIT || tissage === TISSAGE.PEYOTE) {
             for(let iRow = iRowBegin; iRow < iRowEnd; iRow++) {
                 // extra col used for proper peyote pattern rendering
                 // when the pattern is applied to odd rows
                 let extraCol = (tissage === TISSAGE.PEYOTE && (iRowBegin % 2 === 1) && (iRow % 2 === 0)) ? 1 : 0;
-                for(let iCol = iColBegin; iCol < iColEnd - extraCol; iCol++) {
+                if(patternStartingPoint === 'br') {
+                    // in case of a pattern truncated on the top,
+                    // iRowBegin = 0 is not representative,
+                    // thus iRowEnd - patternWidth is used
+                    extraCol = (tissage === TISSAGE.PEYOTE && (Math.abs(iRowEnd - factory.patterns[patternNb].dimension.width) % 2 === 1) && (iRow % 2 === 0)) ? 1 : 0;
+                }
+                for(let iCol = iColBegin; iCol < iColEnd; iCol++) { // TODO remove extraCol from the for loop but add a max when used afterwards
 
-                    let patternColorKey = factory.patterns[patternNb].perlesPeintesTab[iCol - iColBegin][iRow - iRowBegin];
+                    let patternColorKey = factory.patterns[patternNb].perlesPeintesTab[iCol - deltaCol][iRow - deltaRow];
+
                     if (patternColorKey !== '') {
                         if(preview) {
+                            if(extraCol && iCol === this.dimension.length - 1) continue
                             this.perlesPeintesTabFuturePreview[iCol + extraCol][iRow] = patternColorKey;
                         } else {
                             this.initPerlesPeintesTabCurrentPreview();
@@ -227,17 +255,20 @@ class Trame {
                     }
                 }
             }
-        } else {
+        } else /* PEYOTE_V */ {
             for(let iCol = iColBegin; iCol < iColEnd; iCol++) {
 
                 // extra row used for proper vertical peyote pattern rendering
                 // when the pattern is applied to odd rows
                 let extraRow = (tissage === TISSAGE.PEYOTE_V && (iColBegin % 2 === 1) && (iCol % 2 === 0)) ? 1 : 0;
-
-                for(let iRow = iRowBegin; iRow < iRowEnd - extraRow; iRow++) {
-                    let patternColorKey = factory.patterns[patternNb].perlesPeintesTab[iCol - iColBegin][iRow - iRowBegin];
+                if(patternStartingPoint === 'br') {
+                    extraRow = (tissage === TISSAGE.PEYOTE_V && (Math.abs(iColEnd - factory.patterns[patternNb].dimension.length) % 2 === 1) && (iCol % 2 === 0)) ? 1 : 0;
+                }
+                for(let iRow = iRowBegin; iRow < iRowEnd; iRow++) {
+                    let patternColorKey = factory.patterns[patternNb].perlesPeintesTab[iCol - deltaCol][iRow - deltaRow];
                     if (patternColorKey !== '') {
                         if(preview) {
+                            if(extraRow && iRow === this.dimension.width - 1) continue
                             this.perlesPeintesTabFuturePreview[iCol][iRow + extraRow] = patternColorKey;
                         } else {
                             this.initPerlesPeintesTabCurrentPreview();
@@ -404,6 +435,30 @@ class Bracelet extends Trame {
     export() {
         return tissage + '-' + super.export();;
     }
+
+    addCol(iCol) {
+        super.addCol(iCol);
+        document.getElementById("input-longueur").value = this.dimension.length;
+        computeLengthHint();
+    }
+
+    deleteCol(iCol) {
+        super.deleteCol(iCol);
+        document.getElementById("input-longueur").value = this.dimension.length;
+        computeLengthHint();
+    }
+
+    addRow(iRow) {
+        super.addRow(iRow);
+        document.getElementById("input-largeur").value = this.dimension.width;
+        computeWidthHint();
+    }
+
+    deleteRow(iRow) {
+        super.deleteRow(iRow);
+        document.getElementById("input-largeur").value = this.dimension.width;
+        computeWidthHint();
+    }
 }
 
 class Pattern extends Trame {
@@ -436,7 +491,7 @@ class Pattern extends Trame {
 
         this.initPerlesPeintes(perlesPeintesString);
         this.generateBraceletCaneva();
-        this.generateRadioPinceau();    
+        this.generatePatternActions();
 
         this.initPerlesPeintesTabCurrentPreview();
 
@@ -471,8 +526,22 @@ class Pattern extends Trame {
         }
     }
 
-    generateRadioPinceau() {
-        let radioInput = generateRadioInput(this.htmlIdHook);
-        document.getElementById(this.htmlIdHook + '-sub').appendChild(radioInput);
+    generatePatternActions() {
+        let flexDiv = document.createElement('div');
+        flexDiv.setAttribute('class', 'pattern-actions');
+
+        let radioSelectPatternTL = generateRadioInput(this.htmlIdHook + '-tl');
+        let radioSelectPatternBR = generateRadioInput(this.htmlIdHook + '-br');
+        let crossDeletePattern = generateDeleteBead();
+        crossDeletePattern.setAttribute('onclick', 'factory.deletePattern(' + this.patternNb + ')');
+
+        flexDiv.appendChild(radioSelectPatternTL);
+        flexDiv.appendChild(radioSelectPatternBR);
+        flexDiv.appendChild(crossDeletePattern);
+        document.getElementById(this.htmlIdHook + '-sub').appendChild(flexDiv);
+    }
+
+    deletePattern() {
+        document.getElementById(this.htmlIdHook + '-sub').remove();
     }
 }

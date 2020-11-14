@@ -15,7 +15,6 @@ function generateActionBead() {
     let actionBead = document.createElement('div');
     actionBead.setAttribute('class', 'bead action-bead');
     actionBead.setAttribute("oncontextmenu", "return false;");
-    actionBead.innerHTML = 'x';
     return actionBead;
 }
 

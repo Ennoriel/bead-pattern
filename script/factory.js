@@ -34,6 +34,11 @@ class Factory {
         }
     }
 
+    deletePattern(patterNb) {
+        this.patterns[patterNb].deletePattern();
+        this.patterns.splice(patterNb, 1);
+    }
+
     generateTrame() {
         let braceletDimension = new Dimension(document.getElementById("input-largeur").value, document.getElementById("input-longueur").value);
         this.bracelet.generateTrame(braceletDimension);
