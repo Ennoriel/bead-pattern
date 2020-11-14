@@ -1,5 +1,6 @@
 function addClassname(element, classname) {
-    element.setAttribute('class', element.getAttribute('class') + ' ' + classname)
+    if (!element.getAttribute('class').split(' ').includes(classname))
+        element.setAttribute('class', element.getAttribute('class') + ' ' + classname)
 }
 
 function removeClassname(element, classname) {
