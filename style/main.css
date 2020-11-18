@@ -186,7 +186,7 @@ img {
     vertical-align: middle;
 }
 
-@media screen and (max-width: 1500px) { 
+@media screen and (max-width: 2500px) { 
     .menu-label {
         white-space: nowrap;
         text-overflow: ellipsis;
