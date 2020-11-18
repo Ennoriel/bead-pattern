@@ -114,8 +114,11 @@
             <div id="patterns-container" class="caneva-container-centering flex-evenly-centered"></div>
             <div id="bracelet-container" class="caneva-container-centering"></div>
         </div>
-        <include src="bead-collection/index.html"></include>
-        <div id="color-picker" class="cp-default" hidden></div>
+        
+        <div id="color-picker" hidden>
+            <include src="bead-collection/index.html"></include>
+            <div id="picker" class="cp-default"></div>
+        </div>
     </body>
     <script>
         main();
