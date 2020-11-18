@@ -27,7 +27,7 @@
     right: 30px;
 }
 .color-picker-opacity {
-    opacity: 15%;
+    opacity: 45%;
     transition: opacity 0.75s linear 0.25s
 }
 .color-picker-opacity:hover {

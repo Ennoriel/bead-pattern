@@ -7,7 +7,7 @@
   bottom: 30px;
   background-color: #f5f5f5;
   display: grid;
-  grid-template-columns: 30% auto;
+  grid-template-columns: 200px auto;
   gap: 10px
 }
 
@@ -25,7 +25,8 @@
 }
 
 #bead-filters input{
-  margin: 0 10px;
+  margin: 2px 10px;
+  vertical-align: top;
 }
 
 #bead-filters label{
@@ -33,25 +34,103 @@
   width: 80%;
 }
 
+@media (max-width: 900px) {
+  #bead-filters label{
+    width: 70%;
+  }
+}
+
 #bead-thumbnails {
   background-color: #ffffff;
+}
+
+#thumbnails {
   overflow-y: scroll;
   scrollbar-color:  gray lightgray;
   scrollbar-width: thin;
   display: grid;
-  padding: 10px;
-  grid-template-columns: calc(20% - 5px) calc(20% - 5px) calc(20% - 5px) calc(20% - 5px) calc(20% - 5px);
-  gap: 5px
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
 }
 
-#bead-thumbnails label{
+@media (max-width: 1180px) {
+  #thumbnails {
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  }
+}
+
+@media (max-width: 1110px) {
+  #thumbnails {
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  }
+}
+
+@media (max-width: 1040px) {
+  #thumbnails {
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  }
+}
+
+@media (max-width: 970px) {
+  #thumbnails {
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  }
+}
+
+@media (max-width: 900px) {
+  #thumbnails {
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  }
+}
+
+@media (max-width: 830px) {
+  #thumbnails {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+}
+
+@media (max-width: 760px) {
+  #thumbnails {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+#thumbnails div {
+  margin: 0 2px
+}
+
+#thumbnails label {
   font-size: 14px;
   font-weight: bold;
+  display: inline-block;
+  height: 20px;
 }
 
-#bead-thumbnails img{
+#thumbnails img {
   width: 100%;
   height: auto;
+}
+
+.filters-no-filter {
+  margin: 0px;
+}
+
+.thumbnails-no-filter {
+  height: 200px;
+}
+
+.filters-filter {
+  margin: 10px;
+}
+
+.thumbnails-filter {
+  height: 160px;
+}
+
+#my-filters span {
+  background: #f5f5f5;
+  border-radius: 25px;
+  padding: 0 5px;
+  margin: 0 3px;
 }
 
 .big {

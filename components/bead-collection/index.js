@@ -3,7 +3,7 @@ class BeadCollection {
 	constructor() {
 		this.loadFilters();
 		this.loadBeads();
-		this.filters = []
+		this.myFilters = []
 	}
 
 	loadFilters() {
@@ -11,11 +11,14 @@ class BeadCollection {
 		fetch('./public/filters.json')
 			.then(response => response.json())
 			.then(filters => {
+
+				this.filters = filters
+
 				let beadFilters = document.getElementById('bead-filters')
 
 				filters.forEach((filter, filterIndex) => {
 
-					this.filters.push({id: filter.id, entries: []})
+					this.myFilters.push({id: filter.id, entries: []})
 
 					let title = document.createElement('h1');
 					title.innerHTML = filter.label
@@ -45,15 +48,14 @@ class BeadCollection {
 		}
 
 		let beadsToLoad = this.beads.filter(bead => {
-			return this.filters.filter(filter => filter.entries.length)
+			return this.myFilters.filter(filter => filter.entries.length)
 							.every(filter => typeof bead[filter.id] === "number" ? 
 											filter.entries.length === 1 && filter.entries.includes(bead[filter.id]) :
 											filter.entries.every(filterEntry => bead[filter.id].includes(filterEntry) )
 							)
 		})
 
-		let beadThumbnails = document.getElementById('bead-thumbnails');
-		beadThumbnails.innerHTML = "";
+		document.getElementById('thumbnails').innerHTML = "";
 
 		beadsToLoad.forEach(bead => {
 			let container = document.createElement('div');
@@ -70,26 +72,47 @@ class BeadCollection {
 			container.append(label);
 			container.append(img);
 
-			beadThumbnails.append(container);
+			document.getElementById('thumbnails').append(container);
 		})
 	}
 
 	handleFilter(filterIndex, entryIndex) {
 
-		// console.log(filter);
-		// console.log(filterIndex);
-
-		if (this.filters[filterIndex].entries.includes(entryIndex)) {
-			this.filters[filterIndex].entries.splice(this.filters[filterIndex].entries.indexOf(entryIndex), 1);
+		if (this.myFilters[filterIndex].entries.includes(entryIndex)) {
+			this.myFilters[filterIndex].entries.splice(this.myFilters[filterIndex].entries.indexOf(entryIndex), 1);
 		} else {
-			this.filters[filterIndex].entries.push(entryIndex)
+			this.myFilters[filterIndex].entries.push(entryIndex)
 		}
-		console.log(this.filters)
-		// if (this.filters[filter].includes(filterIndex)) {
-		// 	this.filters[filter].splice(this.filters[filter].indexOf(filterIndex), 1);
-		// } else {
-		// 	this.filters[filter].push(filterIndex);
-		// }
+		
+		let myFilters = document.getElementById('my-filters');
+		myFilters.innerHTML = '';
+		
+		let isOneFilterSelected = false;
+		this.myFilters.forEach((myFilter, index) => {
+			if(myFilter.entries.length) {
+				isOneFilterSelected = true;
+				let myFilters = document.getElementById('my-filters');
+
+				myFilter.entries.sort().forEach(filterEntry => {
+					let span = document.createElement('span')
+					span.innerHTML = this.filters[index].entries[filterEntry]
+					myFilters.append(span)
+				})
+
+			}
+		})
+		if(isOneFilterSelected) {
+			removeClassname(myFilters, 'filters-no-filter')
+			addClassname(myFilters, 'filters-filter')
+			removeClassname(document.getElementById('thumbnails'), 'thumbnails-no-filter')
+			addClassname(document.getElementById('thumbnails'), 'thumbnails-filter')
+		} else {
+			addClassname(myFilters, 'filters-no-filter')
+			removeClassname(myFilters, 'filters-filter')
+			addClassname(document.getElementById('thumbnails'), 'thumbnails-no-filter')
+			removeClassname(document.getElementById('thumbnails'), 'thumbnails-filter')
+		}
+
 		this.loadBeads();
 	}
 

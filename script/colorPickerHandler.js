@@ -42,6 +42,6 @@ class ColorPickerHandler {
         this.isOpen = false;
         this.key = undefined;
         this.container.setAttribute('hidden', 'true');
-        removeClassname(this.pickerContainer, 'color-picker-opacity')
+        removeClassname(this.container, 'color-picker-opacity')
     }
 }
