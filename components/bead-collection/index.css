@@ -13,8 +13,6 @@
 #bead-filters {
   background-color: #ffffff;
   overflow-y: auto;
-  /* scrollbar-color:  gray lightgray;
-  scrollbar-width: thin; */
 }
 
 #bead-filters h1 {
@@ -45,8 +43,6 @@
 
 #thumbnails {
   overflow-y: auto;
-  /* scrollbar-color:  gray lightgray;
-  scrollbar-width: thin; */
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
 }
@@ -94,17 +90,21 @@
 }
 
 #thumbnails div {
-  margin: 0 2px
+  margin: 3px 2px
 }
 
 #thumbnails label {
-  font-size: 14px;
+  font-size: 12px;
   font-weight: bold;
   display: inline-block;
-  height: 20px;
 }
 
-#thumbnails img {
+#thumbnails label + img {
+  width: 12px;
+  float: right;
+}
+
+#thumbnails img + img {
   width: 100%;
   height: auto;
 }
@@ -129,10 +129,6 @@
   background-color: #555;
   color: white
 }
-
-/* #my-filters span:first-child::before {
-  background-color: #d5d5d5;
-} */
 
 #my-filters span {
   pointer-events: none;

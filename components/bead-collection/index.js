@@ -67,16 +67,21 @@ class BeadCollection {
 		beadsToLoad.forEach(bead => {
 			let container = document.createElement('div');
 			container.id = bead.i
-			container.addEventListener('click', () => this.handleSelect(bead.i))
 
 			let label = document.createElement('label');
 			label.innerHTML = bead.i;
 
+			let cart = document.createElement('img');
+			cart.addEventListener('click', () => 	alert('not yet implemented'))
+			cart.src = 'public/icons/shopping-cart.svg'
+
 			let img = document.createElement('img');
 			img.loading = 'lazy'
 			img.src = 'public/thumbnails/' + bead.i + '.jpg';
+			img.addEventListener('click', () => this.handleSelect(bead.i))
 
 			container.append(label);
+			container.append(cart)
 			container.append(img);
 
 			document.getElementById('thumbnails').append(container);
