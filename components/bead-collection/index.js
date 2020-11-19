@@ -1,42 +1,49 @@
 class BeadCollection {
 
 	constructor() {
-		this.loadFilters();
+		this.initFilters();
 		this.loadBeads();
+	}
+
+	async initFilters() {
 		this.myFilters = []
+		await fetch('./public/filters.json')
+			.then(response => response.json())
+			.then(filters => {
+				this.filters = filters
+				filters.forEach(filter => {
+					this.myFilters.push({id: filter.id, entries: []})
+				})
+				this.loadFilters()
+			})
 	}
 
 	loadFilters() {
 
-		fetch('./public/filters.json')
-			.then(response => response.json())
-			.then(filters => {
+		let beadFilters = document.getElementById('bead-filters')
+		beadFilters.innerHTML = "";
 
-				this.filters = filters
+		this.filters.forEach((filter, filterIndex) => {
 
-				let beadFilters = document.getElementById('bead-filters')
+			let title = document.createElement('h1');
+			title.innerHTML = filter.label
 
-				filters.forEach((filter, filterIndex) => {
+			beadFilters.append(title)
 
-					this.myFilters.push({id: filter.id, entries: []})
+			filter.entries.forEach((filterEntry, entryIndex) => {
+				let input = document.createElement('input');
+				input.type = "checkbox";
+				input.setAttribute('onClick', "beadCollection.handleFilter(" + filterIndex + "," + entryIndex + ")")
+				if (this.myFilters[filterIndex].entries.includes(entryIndex)) {
+					input.checked = true
+				}
 
-					let title = document.createElement('h1');
-					title.innerHTML = filter.label
+				let label = document.createElement('label');
+				label.innerHTML = filterEntry;
 
-					beadFilters.append(title)
-
-					filter.entries.forEach((filterEntry, entryIndex) => {
-						let input = document.createElement('input');
-						input.type = "checkbox";
-						input.setAttribute('onClick', "beadCollection.handleFilter('" + filterIndex + "'," + entryIndex + ")")
-
-						let label = document.createElement('label');
-						label.innerHTML = filterEntry;
-
-						beadFilters.append(input)
-						beadFilters.append(label)
-					});
-				})
+				beadFilters.append(input)
+				beadFilters.append(label)
+			});
 		});
 	}
 
@@ -78,16 +85,21 @@ class BeadCollection {
 
 	handleFilter(filterIndex, entryIndex) {
 
-		if (this.myFilters[filterIndex].entries.includes(entryIndex)) {
-			this.myFilters[filterIndex].entries.splice(this.myFilters[filterIndex].entries.indexOf(entryIndex), 1);
+		if(!filterIndex && !entryIndex) {
+			this.myFilters.forEach(filter => filter.entries = []);
 		} else {
-			this.myFilters[filterIndex].entries.push(entryIndex)
+			if (this.myFilters[filterIndex].entries.includes(entryIndex)) {
+				this.myFilters[filterIndex].entries.splice(this.myFilters[filterIndex].entries.indexOf(entryIndex), 1);
+			} else {
+				this.myFilters[filterIndex].entries.push(entryIndex)
+			}
 		}
 		
 		let myFilters = document.getElementById('my-filters');
 		myFilters.innerHTML = '';
 		
 		let isOneFilterSelected = false;
+		
 		this.myFilters.forEach((myFilter, index) => {
 			if(myFilter.entries.length) {
 				isOneFilterSelected = true;
@@ -96,12 +108,18 @@ class BeadCollection {
 				myFilter.entries.sort().forEach(filterEntry => {
 					let span = document.createElement('span')
 					span.innerHTML = this.filters[index].entries[filterEntry]
+					span.setAttribute('onclick', 'beadCollection.handleDeleteFilter(' + index + ', ' + filterEntry + ')')
 					myFilters.append(span)
 				})
 
 			}
 		})
 		if(isOneFilterSelected) {
+			let span = document.createElement('span')
+			span.innerHTML = 'raz'
+			span.setAttribute('onclick', 'beadCollection.handleDeleteAllFilters()')
+			document.getElementById('my-filters').prepend(span)
+
 			removeClassname(myFilters, 'filters-no-filter')
 			addClassname(myFilters, 'filters-filter')
 			removeClassname(document.getElementById('thumbnails'), 'thumbnails-no-filter')
@@ -114,6 +132,16 @@ class BeadCollection {
 		}
 
 		this.loadBeads();
+	}
+
+	handleDeleteFilter(filterIndex, entryIndex) {
+		this.handleFilter(filterIndex, entryIndex);
+		this.loadFilters();
+	}
+
+	handleDeleteAllFilters() {
+		this.handleFilter();
+		this.loadFilters();
 	}
 
 	handleSelect(beadIndex) {

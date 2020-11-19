@@ -7,15 +7,14 @@
   bottom: 30px;
   background-color: #f5f5f5;
   display: grid;
-  grid-template-columns: 200px auto;
-  gap: 10px
+  grid-template-columns: 200px calc(100vw - 290px - 40px - 200px);
 }
 
 #bead-filters {
   background-color: #ffffff;
   overflow-y: auto;
-  scrollbar-color:  gray lightgray;
-  scrollbar-width: thin;
+  /* scrollbar-color:  gray lightgray;
+  scrollbar-width: thin; */
 }
 
 #bead-filters h1 {
@@ -45,9 +44,9 @@
 }
 
 #thumbnails {
-  overflow-y: scroll;
-  scrollbar-color:  gray lightgray;
-  scrollbar-width: thin;
+  overflow-y: auto;
+  /* scrollbar-color:  gray lightgray;
+  scrollbar-width: thin; */
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
 }
@@ -126,11 +125,43 @@
   height: 160px;
 }
 
+#my-filters span:first-child {
+  background-color: #555;
+  color: white
+}
+
+/* #my-filters span:first-child::before {
+  background-color: #d5d5d5;
+} */
+
 #my-filters span {
-  background: #f5f5f5;
-  border-radius: 25px;
-  padding: 0 5px;
+  pointer-events: none;
+  background: #ddd;
+  border-radius: 10px;
+  padding-right: 8px;
   margin: 0 3px;
+  height: 20px;
+  display: inline-block;
+}
+
+#my-filters span::before {
+  background-image: url(../../public/icons/trash.svg);
+  width: 16px;
+  height: 16px;
+  line-height: 16px;
+  background-size: 14px 16px;
+  content: ' ';
+  display: inline-block;
+  background-color: #f5f5f5;
+  position: relative;
+  top: 2px;
+  left: 2px;
+  border-radius: 10px;
+  text-align: center;
+  background-position: center;
+  margin-right: 5px;
+  pointer-events: all;
+  cursor: pointer;
 }
 
 .big {

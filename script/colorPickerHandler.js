@@ -17,11 +17,17 @@ class ColorPickerHandler {
         )
 
         window.addEventListener('click', e => {
-            if (this.isOpen && !this.container.contains(e.target)
-                            && !e.target.classList.contains('form-input')){
+            if (this.toClose(e.target)) {
                 this.handleCloseColorPicker();
             }
         });
+    }
+
+    toClose(target) {
+        return this.isOpen
+            && !this.container.contains(target) // element should not be in color picker
+            && !target.classList.contains('form-input') // can click on another color input
+            && target.parentNode !== null // can click on a filter to delete it
     }
 
     handleColorPickerChange(hex) {
