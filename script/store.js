@@ -4,6 +4,7 @@ var tissage;
 var lettres;
 var colors;
 var pinceau;
+
 var colorPicker;
 
 var leftClickPressed;

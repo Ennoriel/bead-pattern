@@ -3,6 +3,8 @@ class BeadCollection {
 	constructor() {
 		this.initFilters();
 		this.loadBeads();
+
+		document.getElementById('bead-collection').style.setProperty("--collection-height", "200px");
 	}
 
 	async initFilters() {
@@ -160,6 +162,19 @@ class BeadCollection {
 		}
 		this.bigBead = beadIndex
 		addClassname(document.getElementById(beadIndex), 'big')
+	}
+
+	increaseSize() {
+		
+		if(this.isHigh) {
+			document.getElementById('bead-collection').style.setProperty("--collection-height", "200px");
+			removeClassname(document.getElementById('color-picker-higher'), 'color-picker-lower');
+			this.isHigh = false
+		} else {
+			document.getElementById('bead-collection').style.setProperty("--collection-height", "calc(100vh - 100px)");
+			addClassname(document.getElementById('color-picker-higher'), 'color-picker-lower');
+			this.isHigh = true
+		}
 	}
 }
 

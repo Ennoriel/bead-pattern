@@ -1,6 +1,6 @@
 #bead-collection {
   width: calc(100vw - 290px - 40px);
-  height: 200px;
+  height: var(--collection-height);
   padding: 10px;
   position: absolute;
   left: 30px;
@@ -44,48 +44,48 @@
 #thumbnails {
   overflow-y: auto;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
 }
 
-@media (max-width: 1180px) {
-  #thumbnails {
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-  }
-}
-
-@media (max-width: 1110px) {
+@media (max-width: 1240px) {
   #thumbnails {
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
   }
 }
 
-@media (max-width: 1040px) {
+@media (max-width: 1160px) {
   #thumbnails {
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
   }
 }
 
-@media (max-width: 970px) {
+@media (max-width: 1080px) {
   #thumbnails {
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
   }
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1000px) {
   #thumbnails {
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   }
 }
 
-@media (max-width: 830px) {
+@media (max-width: 920px) {
   #thumbnails {
     grid-template-columns: 1fr 1fr 1fr 1fr;
   }
 }
 
-@media (max-width: 760px) {
+@media (max-width: 840px) {
   #thumbnails {
     grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+@media (max-width: 760px) {
+  #thumbnails {
+    grid-template-columns: 1fr 1fr;
   }
 }
 
@@ -114,7 +114,7 @@
 }
 
 .thumbnails-no-filter {
-  height: 200px;
+  height: var(--collection-height);
 }
 
 .filters-filter {
@@ -122,12 +122,15 @@
 }
 
 .thumbnails-filter {
-  height: 160px;
+  height: calc(var(--collection-height) - 40px);
 }
 
 #my-filters span:first-child {
   background-color: #555;
-  color: white
+}
+
+#my-filters span:first-child:hover::before {
+  background-color: #555;
 }
 
 #my-filters span {
@@ -160,7 +163,28 @@
   cursor: pointer;
 }
 
+#my-filters span:hover::before {
+  background-color: #ddd;
+}
+
 .big {
   grid-column-end: span 2;
   grid-row-end: span 2;
+}
+
+#color-picker-higher {
+  position: absolute;
+  z-index: 2;
+  background-color: lightgray;
+  border-radius: 0 10px 10px 10px;
+  cursor: pointer;
+}
+
+#color-picker-higher:hover {
+  background-color: #555;
+}
+
+.color-picker-lower {
+  transform: rotate(0.5turn) !important;
+  border-radius: 10px 10px 0 10px !important;
 }
