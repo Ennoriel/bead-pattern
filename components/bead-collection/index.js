@@ -181,6 +181,8 @@ class BeadPanel {
 	 * Shift thumbail panel below the selected filters
 	 */
 	shiftThumbnailPanel(isOneFilterSelected) {
+		let selectedFilters = document.getElementById('selected-filters');
+		
 		if (isOneFilterSelected) {
 			removeClassname(selectedFilters, 'filters-no-filter');
 			addClassname(selectedFilters, 'filters-filter');
