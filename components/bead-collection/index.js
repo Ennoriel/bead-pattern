@@ -1,74 +1,89 @@
-class BeadCollection {
+/**
+ * Bead selector panel component
+ */
+class BeadPanel {
+
 	constructor() {
 		this.initFilters();
-		this.loadBeads();
+		this.initBeads();
 
 		document
 			.getElementById('bead-collection')
 			.style.setProperty('--collection-height', '200px');
 	}
 
+	/**
+	 * Inits filters and selectedFilters attributes and then calls the rendering method
+	 */
 	async initFilters() {
-		this.myFilters = [];
+		this.selectedFilters = [];
 		await fetch('./public/filters.json')
 			.then(response => response.json())
 			.then(filters => {
 				this.filters = filters;
 				filters.forEach(filter => {
-					this.myFilters.push({ id: filter.id, entries: [] });
+					this.selectedFilters.push({ id: filter.id, entries: [] });
 				});
-				this.loadFilters();
+				this.renderFilters();
 			});
 	}
 
-	loadFilters() {
-		let beadFilters = document.getElementById('bead-filters');
-		beadFilters.innerHTML = '';
+	/**
+	 * Renders the filters from the selectedFilters attribute
+	 */
+	renderFilters() {
+		let filterPanel = document.getElementById('bead-filters');
+		filterPanel.innerHTML = '';
 
 		this.filters.forEach((filter, filterIndex) => {
 			let title = document.createElement('h1');
 			title.innerHTML = filter.label;
 
-			beadFilters.append(title);
+			filterPanel.append(title);
 
 			filter.entries.forEach((filterEntry, entryIndex) => {
 				let input = document.createElement('input');
 				input.type = 'checkbox';
 				input.setAttribute(
 					'onClick',
-					'beadCollection.handleFilter(' + filterIndex + ',' + entryIndex + ')'
+					'beadPanel.handleFilterChange(' + filterIndex + ',' + entryIndex + ')'
 				);
-				if (this.myFilters[filterIndex].entries.includes(entryIndex)) {
+				if (this.selectedFilters[filterIndex].entries.includes(entryIndex)) {
 					input.checked = true;
 				}
 
 				let label = document.createElement('label');
 				label.innerHTML = filterEntry;
 
-				beadFilters.append(input);
-				beadFilters.append(label);
+				filterPanel.append(input);
+				filterPanel.append(label);
 			});
 		});
 	}
 
-	async loadBeads() {
-		if (!this.beads) {
-			this.beads = await fetch('./public/beads.json').then(response => response.json());
-		}
+	/**
+	 * Inits beads attribute and then calls the rendering method
+	 */
+	async initBeads() {
+		this.beads = await fetch('./public/beads.json').then(response => response.json());
+		this.renderBeadThumbails();
+	}
 
-		let beadsToLoad = this.beads.filter(bead => {
-			return this.myFilters
-				.filter(filter => filter.entries.length)
-				.every(filter =>
-					typeof bead[filter.id] === 'number'
-						? filter.entries.length === 1 && filter.entries.includes(bead[filter.id])
-						: filter.entries.every(filterEntry => bead[filter.id].includes(filterEntry))
-				);
-		});
+	/**
+	 * Renders the bead thumbnails
+	 */
+	renderBeadThumbails() {
+		const thumbnailContainer = document.getElementById('thumbnails');
+		thumbnailContainer.innerHTML = '';
 
-		document.getElementById('thumbnails').innerHTML = '';
-
-		beadsToLoad.forEach(bead => {
+		this.beads.filter(bead => 
+			this.selectedFilters.filter(filter => filter.entries.length)
+					.every(filter =>
+						typeof bead[filter.id] === 'number'
+							? filter.entries.length === 1 && filter.entries.includes(bead[filter.id])
+							: filter.entries.every(filterEntry => bead[filter.id].includes(filterEntry))
+					)
+		).forEach(bead => {
 			let container = document.createElement('div');
 			container.id = bead.i;
 
@@ -82,95 +97,144 @@ class BeadCollection {
 			let img = document.createElement('img');
 			img.loading = 'lazy';
 			img.src = 'public/thumbnails/' + bead.i + '.jpg';
-			img.addEventListener('click', () => this.handleSelect(bead.i));
+			img.addEventListener('click', () => this.handleThumbnailClick(bead.i));
 
 			container.append(label);
 			container.append(cart);
 			container.append(img);
 
-			document.getElementById('thumbnails').append(container);
+			thumbnailContainer.append(container);
 		});
 	}
 
-	handleFilter(filterIndex, entryIndex) {
+	/**
+	 * Handles addition of a filter and removal of one or all filters. If called without parameters, reset all filters
+	 *
+	 * @param {number}   filterIndex    filter category index
+	 * @param {number}   entryIndex     entry index in the filter category
+	 */
+	handleFilterChange(filterIndex, entryIndex) {
+		this.updateSelectedFilters(filterIndex, entryIndex);
+		let isOneFilterSelected = this.renderSelectedFilters();
+		this.shiftThumbnailPanel(isOneFilterSelected);
+		this.renderBeadThumbails();
+	}
+
+	/**
+	 * Update the selected filters. If called without parameters, reset all filters
+	 *
+	 * @param {number}   filterIndex    filter category index
+	 * @param {number}   entryIndex     entry index in the filter category
+	 */
+	updateSelectedFilters(filterIndex, entryIndex) {
 		if (!filterIndex && !entryIndex) {
-			this.myFilters.forEach(filter => (filter.entries = []));
+			this.selectedFilters.forEach(filter => (filter.entries = []));
 		} else {
-			if (this.myFilters[filterIndex].entries.includes(entryIndex)) {
-				this.myFilters[filterIndex].entries.splice(
-					this.myFilters[filterIndex].entries.indexOf(entryIndex),
+			if (this.selectedFilters[filterIndex].entries.includes(entryIndex)) {
+				this.selectedFilters[filterIndex].entries.splice(
+					this.selectedFilters[filterIndex].entries.indexOf(entryIndex),
 					1
 				);
 			} else {
-				this.myFilters[filterIndex].entries.push(entryIndex);
+				this.selectedFilters[filterIndex].entries.push(entryIndex);
 			}
 		}
+	}
 
-		let myFilters = document.getElementById('my-filters');
-		myFilters.innerHTML = '';
+	/**
+	 * Renders the selected filters
+	 */
+	renderSelectedFilters() {
+		let selectedFilters = document.getElementById('selected-filters');
+		selectedFilters.innerHTML = '';
 
 		let isOneFilterSelected = false;
 
-		this.myFilters.forEach((myFilter, index) => {
+		this.selectedFilters.forEach((myFilter, index) => {
 			if (myFilter.entries.length) {
 				isOneFilterSelected = true;
-				let myFilters = document.getElementById('my-filters');
+				let selectedFilters = document.getElementById('selected-filters');
 
 				myFilter.entries.sort().forEach(filterEntry => {
 					let span = document.createElement('span');
 					span.innerHTML = this.filters[index].entries[filterEntry];
 					span.setAttribute(
 						'onclick',
-						'beadCollection.handleDeleteFilter(' + index + ', ' + filterEntry + ')'
+						'beadPanel.handleDeleteFilter(' + index + ', ' + filterEntry + ')'
 					);
-					myFilters.append(span);
+					selectedFilters.append(span);
 				});
 			}
 		});
-		if (isOneFilterSelected) {
+
+		if(isOneFilterSelected) {
 			let span = document.createElement('span');
 			span.innerHTML = 'raz';
-			span.setAttribute('onclick', 'beadCollection.handleDeleteAllFilters()');
-			document.getElementById('my-filters').prepend(span);
+			span.setAttribute('onclick', 'beadPanel.handleDeleteAllFilters()');
+			document.getElementById('selected-filters').prepend(span);
+		}
 
-			removeClassname(myFilters, 'filters-no-filter');
-			addClassname(myFilters, 'filters-filter');
+		return isOneFilterSelected;
+	}
+
+	/**
+	 * Shift thumbail panel below the selected filters
+	 */
+	shiftThumbnailPanel(isOneFilterSelected) {
+		if (isOneFilterSelected) {
+			removeClassname(selectedFilters, 'filters-no-filter');
+			addClassname(selectedFilters, 'filters-filter');
 			removeClassname(document.getElementById('thumbnails'), 'thumbnails-no-filter');
 			addClassname(document.getElementById('thumbnails'), 'thumbnails-filter');
 		} else {
-			addClassname(myFilters, 'filters-no-filter');
-			removeClassname(myFilters, 'filters-filter');
+			addClassname(selectedFilters, 'filters-no-filter');
+			removeClassname(selectedFilters, 'filters-filter');
 			addClassname(document.getElementById('thumbnails'), 'thumbnails-no-filter');
 			removeClassname(document.getElementById('thumbnails'), 'thumbnails-filter');
 		}
-
-		this.loadBeads();
 	}
 
+	/**
+	 * Update and rerenders the selected filters
+	 *
+	 * @param {number}   filterIndex    filter category index
+	 * @param {number}   entryIndex     entry index in the filter category
+	 */
 	handleDeleteFilter(filterIndex, entryIndex) {
-		this.handleFilter(filterIndex, entryIndex);
-		this.loadFilters();
+		this.handleFilterChange(filterIndex, entryIndex);
+		this.renderFilters();
 	}
 
+	/**
+	 * delete and rerenders the available filters
+	 */
 	handleDeleteAllFilters() {
-		this.handleFilter();
-		this.loadFilters();
+		this.handleFilterChange();
+		this.renderFilters();
 	}
 
-	handleSelect(beadIndex) {
+	/**
+	 * Focuses a bead thumbnail and selects it as the brush color
+	 * 
+	 * @param {string}   beadIndex    bead index
+	 */
+	handleThumbnailClick(beadIndex) {
 		if (this.bigBead === beadIndex) {
-			removeClassname(document.getElementById(this.bigBead), 'big');
+			removeClassname(document.getElementById(this.bigBead), 'thumbnail-focus');
 			this.bigBead = undefined;
-			// put DB... in inputColor
+			// TODO put DBxxxx in inputColor
 		}
 		if (this.bigBead) {
-			removeClassname(document.getElementById(this.bigBead), 'big');
+			removeClassname(document.getElementById(this.bigBead), 'thumbnail-focus');
 		}
 		this.bigBead = beadIndex;
-		addClassname(document.getElementById(beadIndex), 'big');
+		addClassname(document.getElementById(beadIndex), 'thumbnail-focus');
 	}
 
-	increaseSize() {
+	/**
+	 * handles panel height change
+	 */
+	handlePanelHeightChange() {
 		if (this.isHigh) {
 			document
 				.getElementById('bead-collection')
@@ -187,4 +251,4 @@ class BeadCollection {
 	}
 }
 
-const beadCollection = new BeadCollection();
+const beadPanel = new BeadPanel();
