@@ -1,60 +1,60 @@
 /* Common stuff */
-.picker-wrapper, 
+.picker-wrapper,
 .slide-wrapper {
-    position: relative;
-    float: left;
+	position: relative;
+	float: left;
 }
 .picker-indicator,
 .slide-indicator {
-    position: absolute;
-    left: 0;
-    top: 0;
-    pointer-events: none;
+	position: absolute;
+	left: 0;
+	top: 0;
+	pointer-events: none;
 }
 .picker,
 .slide {
-    cursor: crosshair;
-    float: left;
+	cursor: crosshair;
+	float: left;
 }
 
 /* Default skin */
 
 .cp-default {
-    background-color:#f5f5f5;
-    padding: 10px;
-    position: absolute;
-    bottom: 30px;
-    right: 30px;
+	background-color: #f5f5f5;
+	padding: 10px;
+	position: absolute;
+	bottom: 30px;
+	right: 30px;
 }
 .color-picker-opacity {
-    opacity: 45%;
-    transition: opacity 0.75s linear 0.25s
+	opacity: 45%;
+	transition: opacity 0.75s linear 0.25s;
 }
 .color-picker-opacity:hover {
-    opacity: 100%;
-    transition: opacity 0.2s
+	opacity: 100%;
+	transition: opacity 0.2s;
 }
 .cp-default .picker {
-    width: 200px;
-    height: 200px;
+	width: 200px;
+	height: 200px;
 }
 .cp-default .slide {
-    width: 30px;
-    height: 200px;
+	width: 30px;
+	height: 200px;
 }
 .cp-default .slide-wrapper {
-    margin-left: 10px;
+	margin-left: 10px;
 }
 .cp-default .picker-indicator {
-    width: 5px;
-    height: 5px;
-    border: 1px solid black;
-    border-radius: 4px;
+	width: 5px;
+	height: 5px;
+	border: 1px solid black;
+	border-radius: 4px;
 }
 .cp-default .slide-indicator {
-    width: 100%;
-    height: 4px;
-    left: -1px;
-    border: 1px solid black;
-    border-radius: 4px;
+	width: 100%;
+	height: 4px;
+	left: -1px;
+	border: 1px solid black;
+	border-radius: 4px;
 }

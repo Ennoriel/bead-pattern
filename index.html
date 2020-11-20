@@ -1,126 +1,234 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Conception de motifs Miyuki</title>
-        <link href='https://fonts.googleapis.com/css?family=Raleway:100' rel='stylesheet'>
+	<head>
+		<title>Conception de motifs Miyuki</title>
+		<link href="https://fonts.googleapis.com/css?family=Raleway:100" rel="stylesheet" />
 
-        <link rel="icon" href="public/favicon.svg">
+		<link rel="icon" href="public/favicon.svg" />
 
-        <meta charset="utf-8">
-        <link rel="stylesheet" type="text/css" href="style/main.css">
-        <link rel="stylesheet" type="text/css" href="style/colorPicker.css">
-        <script src="script/util.js"></script>
-        <script src="script/includeHtml.js"></script>
-        <script src="script/lang.js"></script>
-        <script src="script/dimension.js"></script>
-        <script src="script/colorpicker.js"></script>
-        <script src="script/colorPickerHandler.js"></script>
-        <script src="script/factory.js"></script>
-        <script src="script/store.js"></script>
-        <script src="script/braceletGeneration.js"></script>
-        <script src="script/inputColorGeneration.js"></script>
-        <script src="script/inputColorEvents.js"></script>
-        <script src="script/braceletUtils.js"></script>
-        <script src="script/braceletEvent.js"></script>
+		<meta charset="utf-8" />
+		<link rel="stylesheet" type="text/css" href="style/main.css" />
+		<link rel="stylesheet" type="text/css" href="style/colorPicker.css" />
+		<script src="script/util.js"></script>
+		<script src="script/includeHtml.js"></script>
+		<script src="script/lang.js"></script>
+		<script src="script/dimension.js"></script>
+		<script src="script/colorpicker.js"></script>
+		<script src="script/colorPickerHandler.js"></script>
+		<script src="script/factory.js"></script>
+		<script src="script/store.js"></script>
+		<script src="script/braceletGeneration.js"></script>
+		<script src="script/inputColorGeneration.js"></script>
+		<script src="script/inputColorEvents.js"></script>
+		<script src="script/braceletUtils.js"></script>
+		<script src="script/braceletEvent.js"></script>
 
-        <script src="script/main.js"></script>
-    </head>
-    <body>
-        <div id="menu-bar">
-            <span class="menu-block">
-                
-                <span class="menu-item">
-                    <input type="radio" name="tissage" id="droit" value="Droit" checked autocomplete="off"/>
-                    <img src="public/icons/align-justify.svg" name="braceletDroit"></img>
-                    <label id="label-bracelet-droit" class="menu-label menu-label-h" for="braceletDroit">Tissage droit</label>
-                </span>
-                <span class="menu-item">
-                    <input type="radio" name="tissage" id="peyote" value="Peyote" autocomplete="off"/>
-                    <img src="public/icons/align-center.svg" name="braceletPeyote"></img>
-                    <label id="label-bracelet-deyote" class="menu-label menu-label-h" for="braceletPeyote">Tissage Peyote</label>
-                </span>
-                <span class="menu-item">
-                    <input type="radio" name="tissage" id="peyote-v" value="PeyoteV" autocomplete="off"/>
-                    <img src="public/icons/align-center.svg" name="braceletPeyoteV" style="transform: rotate(-0.25turn);"></img>
-                    <label id="label-bracelet-peyote-v" class="menu-label menu-label-h" for="braceletPeyoteV">Tissage Peyote Vertical</label>
-                </span>
-            </span>
+		<script src="script/main.js"></script>
+	</head>
+	<body>
+		<div id="menu-bar">
+			<span class="menu-block">
+				<span class="menu-item">
+					<input
+						type="radio"
+						name="tissage"
+						id="droit"
+						value="Droit"
+						checked
+						autocomplete="off"
+					/>
+					<img src="public/icons/align-justify.svg" name="braceletDroit" />
+					<label
+						id="label-bracelet-droit"
+						class="menu-label menu-label-h"
+						for="braceletDroit"
+					>
+						Tissage droit
+					</label>
+				</span>
+				<span class="menu-item">
+					<input
+						type="radio"
+						name="tissage"
+						id="peyote"
+						value="Peyote"
+						autocomplete="off"
+					/>
+					<img src="public/icons/align-center.svg" name="braceletPeyote" />
+					<label
+						id="label-bracelet-deyote"
+						class="menu-label menu-label-h"
+						for="braceletPeyote"
+					>
+						Tissage Peyote
+					</label>
+				</span>
+				<span class="menu-item">
+					<input
+						type="radio"
+						name="tissage"
+						id="peyote-v"
+						value="PeyoteV"
+						autocomplete="off"
+					/>
+					<img
+						src="public/icons/align-center.svg"
+						name="braceletPeyoteV"
+						style="transform: rotate(-0.25turn)"
+					/>
+					<label
+						id="label-bracelet-peyote-v"
+						class="menu-label menu-label-h"
+						for="braceletPeyoteV"
+					>
+						Tissage Peyote Vertical
+					</label>
+				</span>
+			</span>
 
-            <span class="menu-block">
-                <span class="menu-item"">
-                    <img src="public/icons/chevron-right.svg" name="longueur"></img>
-                    <input type="number" class="form-input" name="longueur" id="input-longueur" autocomplete="off" onchange="computeLengthHint()"/>
-                    <label id="hint-longueur" class="menu-label menu-label-h" for="longueur"></label>
-                </span>
-                <span class="menu-item"">
-                    <img src="public/icons/chevron-up.svg" name="largeur"></img>
-                    <input type="number" class="form-input" name="largeur" id="input-largeur" autocomplete="off" onchange="computeWidthHint()"/>
-                    <label id="hint-largeur" class="menu-label menu-label-h" for="largeur"></label>
-                </span>
-            </span>
+			<span class="menu-block">
+				<span class="menu-item">
+					<img src="public/icons/chevron-right.svg" name="longueur" />
+					<input
+						type="number"
+						class="form-input"
+						name="longueur"
+						id="input-longueur"
+						autocomplete="off"
+						onchange="computeLengthHint()"
+					/>
+					<label
+						id="hint-longueur"
+						class="menu-label menu-label-h"
+						for="longueur"
+					></label>
+				</span>
+				<span class="menu-item">
+					<img src="public/icons/chevron-up.svg" name="largeur" />
+					<input
+						type="number"
+						class="form-input"
+						name="largeur"
+						id="input-largeur"
+						autocomplete="off"
+						onchange="computeWidthHint()"
+					/>
+					<label id="hint-largeur" class="menu-label menu-label-h" for="largeur"></label>
+				</span>
+			</span>
 
-            <span class="menu-block">
-                <span class="menu-item" onclick="factory.generateTrame()">
-                    <img src="public/icons/box.svg" name="createBracelet"></img>
-                    <label id="label-create-bracelet" class="menu-label menu-label-h" for="createBracelet">Créer un bracelet</label>
-                </span>
-                <span id="create-pattern" class="menu-item" onclick="factory.generatePattern()">
-                    <img src="public/icons/codesandbox.svg" name="generatePattern"></img>
-                    <label id="label-generate-pattern" class="menu-label menu-label-h" for="generatePattern">Ajouter un motif</label>
-                </span>
-            </span>
+			<span class="menu-block">
+				<span class="menu-item" onclick="factory.generateTrame()">
+					<img src="public/icons/box.svg" name="createBracelet" />
+					<label
+						id="label-create-bracelet"
+						class="menu-label menu-label-h"
+						for="createBracelet"
+					>
+						Créer un bracelet
+					</label>
+				</span>
+				<span id="create-pattern" class="menu-item" onclick="factory.generatePattern()">
+					<img src="public/icons/codesandbox.svg" name="generatePattern" />
+					<label
+						id="label-generate-pattern"
+						class="menu-label menu-label-h"
+						for="generatePattern"
+					>
+						Ajouter un motif
+					</label>
+				</span>
+			</span>
 
-            <span class="menu-block">
-                <span id="export-pattern" class="menu-item" onclick="factory.export()">
-                    <img src="public/icons/download.svg" name="download"></img>
-                    <label id="label-download" class="menu-label menu-label-h" for="download">sauvegarder</label>
-                </span>
-                <input id="import-input" class="form-input" type="text" autocomplete="off" placeholder="Coller la sauvegarde"/>
-                <span id="import-pattern" class="menu-item" onclick="factory.import()">
-                    <img src="public/icons/upload.svg" name="upload"></img>
-                    <label id="label-upload" class="menu-label menu-label-h" for="upload">charger</label>
-                </span>
-            </span>
+			<span class="menu-block">
+				<span id="export-pattern" class="menu-item" onclick="factory.export()">
+					<img src="public/icons/download.svg" name="download" />
+					<label id="label-download" class="menu-label menu-label-h" for="download">
+						sauvegarder
+					</label>
+				</span>
+				<input
+					id="import-input"
+					class="form-input"
+					type="text"
+					autocomplete="off"
+					placeholder="Coller la sauvegarde"
+				/>
+				<span id="import-pattern" class="menu-item" onclick="factory.import()">
+					<img src="public/icons/upload.svg" name="upload" />
+					<label id="label-upload" class="menu-label menu-label-h" for="upload"
+						>charger</label
+					>
+				</span>
+			</span>
 
-            <span class="menu-block">
-                <span id="focus-display" class="menu-item" onclick="factory.focusDisplay()">
-                    <img src="public/icons/eye.svg" name="focusDisplay"></img>
-                    <label id="label-focus-display" class="menu-label menu-label-h" for="focusDisplay">Focus</label>
-                </span>
-                <div id="unfocus-display" class="menu-item" onclick="factory.unfocusDisplay()" hidden>
-                    <img src="public/icons/eye-off.svg" name="unfocusDisplay"></img>
-                    <label id="label-unfocus-display" class="menu-label menu-label-h" for="unfocusDisplay">Travail</label>
-                </div>
-            </span>
+			<span class="menu-block">
+				<span id="focus-display" class="menu-item" onclick="factory.focusDisplay()">
+					<img src="public/icons/eye.svg" name="focusDisplay" />
+					<label
+						id="label-focus-display"
+						class="menu-label menu-label-h"
+						for="focusDisplay"
+					>
+						Focus
+					</label>
+				</span>
+				<div
+					id="unfocus-display"
+					class="menu-item"
+					onclick="factory.unfocusDisplay()"
+					hidden
+				>
+					<img src="public/icons/eye-off.svg" name="unfocusDisplay" />
+					<label
+						id="label-unfocus-display"
+						class="menu-label menu-label-h"
+						for="unfocusDisplay"
+					>
+						Travail
+					</label>
+				</div>
+			</span>
 
-            <span class="menu-block">
-                <span id="focus-display" class="menu-item">
-                    <img src="public/lang/fr.svg" name="focusDisplay"></img>
-                    <label id="flag-list" class="menu-label menu-label-v">
-                        <img src="public/lang/fr.svg" class="flag-list-item" onclick="loadLanguage('fr')"></img>
-                        <img src="public/lang/gb.svg" class="flag-list-item" onclick="loadLanguage('gb')"></img>
-                    </label>
-                </span>
-            </span>
-        </div>
+			<span class="menu-block">
+				<span id="focus-display" class="menu-item">
+					<img src="public/lang/fr.svg" name="focusDisplay" />
+					<label id="flag-list" class="menu-label menu-label-v">
+						<img
+							src="public/lang/fr.svg"
+							class="flag-list-item"
+							onclick="loadLanguage('fr')"
+						/>
+						<img
+							src="public/lang/gb.svg"
+							class="flag-list-item"
+							onclick="loadLanguage('gb')"
+						/>
+					</label>
+				</span>
+			</span>
+		</div>
 
-        <span id="input-color" class="menu-block">
-            <span id="add-color-button" class="menu-item">
-                <img src="public/icons/plus.svg" onclick="addColor()"></img>
-            </span> 
-        </span>
+		<span id="input-color" class="menu-block">
+			<span id="add-color-button" class="menu-item">
+				<img src="public/icons/plus.svg" onclick="addColor()" />
+			</span>
+		</span>
 
-        <div id="trame-container" class="trame-container-work">
-            <div id="patterns-container" class="caneva-container-centering flex-evenly-centered"></div>
-            <div id="bracelet-container" class="caneva-container-centering"></div>
-        </div>
-        
-        <div id="color-picker" hidden></div>
-    </body>
-    <script>
-        main();
-        factory.generateTrame();
+		<div id="trame-container" class="trame-container-work">
+			<div
+				id="patterns-container"
+				class="caneva-container-centering flex-evenly-centered"
+			></div>
+			<div id="bracelet-container" class="caneva-container-centering"></div>
+		</div>
 
-        importIncludeElements();
-    </script>
-</html> 
+		<div id="color-picker" hidden></div>
+	</body>
+	<script>
+		main();
+		factory.generateTrame();
+
+		importIncludeElements();
+	</script>
+</html>

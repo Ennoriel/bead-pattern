@@ -11,5 +11,5 @@ app.use('/script', express.static('script'));
 app.use('/style', express.static('style'));
 
 app.listen(port, () => {
-    console.log('Server app listening on port ' + port);
+	console.log('Server app listening on port ' + port);
 });

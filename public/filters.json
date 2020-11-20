@@ -1,52 +1,69 @@
 [
-  {
-    "id": "c",
-    "label": "Color",
-    "entries": [
-      "Beige", "Black", "Blue", "Brown",
-      "Crystal", "Gold", "Gray", "Green",
-      "Iridescent", "Mix", "Orange", "Pink",
-      "Purple", "Red", "Silver", "White", "Yellow"
-    ]
-  },
-  {
-    "id": "g",
-    "label": "Glass",
-    "entries": [
-      "Alabaster", "Opaque", "Silk", "Transparent"
-    ]
-  },
-  {
-    "id": "f",
-    "label": "Finish",
-    "entries": [
-      "Color-Lined", "Copperline", "Duracoat", "Frosted (Matte)",
-      "Galvanized", "Glass enamel", "Glazed", "Glazed Luster",
-      "Gold Luster", "Goldline", "Luster", "Metallic",
-      "Non-Extra Finish", "Outside-Dyed", "Plating", "Rainbow",
-      "Silverline", "Special Coating"
-    ]
-  },
-  {
-    "id": "d",
-    "label": "Die",
-    "entries":  [
-     "Color-Lined", "Duracoat Outside-Dyed",  "Non Dyed", "Outside Dyed"
-    ]
-  },
-  {
-    "id": "z",
-    "label": "Galvanizing",
-    "entries": [
-      "Duracoat Galvanized", "Galvanized", "Non-galvanized"
-    ]
-  },
-  {
-    "id": "p",
-    "label": "Plating",
-    "entries": [
-      "Copper", "Gold", "Nickel", "Non-Plating",
-      "Palladium", "Silver"
-    ]
-  }
+	{
+		"id": "c",
+		"label": "Color",
+		"entries": [
+			"Beige",
+			"Black",
+			"Blue",
+			"Brown",
+			"Crystal",
+			"Gold",
+			"Gray",
+			"Green",
+			"Iridescent",
+			"Mix",
+			"Orange",
+			"Pink",
+			"Purple",
+			"Red",
+			"Silver",
+			"White",
+			"Yellow"
+		]
+	},
+	{
+		"id": "g",
+		"label": "Glass",
+		"entries": ["Alabaster", "Opaque", "Silk", "Transparent"]
+	},
+	{
+		"id": "f",
+		"label": "Finish",
+		"entries": [
+			"Color-Lined",
+			"Copperline",
+			"Duracoat",
+			"Frosted (Matte)",
+			"Galvanized",
+			"Glass enamel",
+			"Glazed",
+			"Glazed Luster",
+			"Gold Luster",
+			"Goldline",
+			"Luster",
+			"Metallic",
+			"Non-Extra Finish",
+			"Outside-Dyed",
+			"Plating",
+			"Rainbow",
+			"Silverline",
+			"Special Coating"
+		]
+	},
+	{
+		"id": "d",
+		"label": "Die",
+		"entries": ["Color-Lined", "Duracoat Outside-Dyed", "Non Dyed", "Outside Dyed"]
+	},
+	{
+		"id": "z",
+		"label": "Galvanizing",
+		"entries": ["Duracoat Galvanized", "Galvanized", "Non-galvanized"]
+	},
+	{
+		"id": "p",
+		"label": "Plating",
+		"entries": ["Copper", "Gold", "Nickel", "Non-Plating", "Palladium", "Silver"]
+	}
 ]

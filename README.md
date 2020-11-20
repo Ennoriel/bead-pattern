@@ -3,6 +3,7 @@
 Lightweight Single Page Application for making bead weaving patterns.
 
 # TOOD :
+
     - [/] refactoring en composants js
     - [ ] gérer le CTRL+Z sur quelques générations
     - [/] enregistrer / charger un bracelet
@@ -13,9 +14,10 @@ Lightweight Single Page Application for making bead weaving patterns.
     - [/] ajouter un bouton pour n'afficher que le bracelet
     - [/] ajouter un mode peyote vertical
     - [ ] freezer la peinture lorsque le colorpicker est ouvert
-    - [ ] 
+    - [ ]
 
 # BUG :
+
     - [/] copie de pattern peyote un rang sur deux
     - [/] sélection des perles peyotes, sans doute problématique à cause de la marge
     - [/] le colorPicker ne se réouvre pas en switchant d'un input à l'autre
@@ -25,7 +27,6 @@ Lightweight Single Page Application for making bead weaving patterns.
       - [/] désélectionné lorsque appliqué à lui même (car regénéré)
       - [/] envoie une erreur lors du rendu (suppression d'un id html ?)
     - [ ] suppression de ligne/colonne en peyote/peyoteV déplace les perles
-
 
 # CREDITS :
 

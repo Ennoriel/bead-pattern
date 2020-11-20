@@ -1,13 +1,13 @@
 {
-    "label-bracelet-droit": "Tissage droit",
-    "label-bracelet-deyote": "Tissage Peyote",
-    "label-bracelet-peyote-v": "Tissage Peyote Vertical",
-    "label-create-bracelet": "Créer un bracelet",
-    "label-generate-pattern": "Ajouter un motif",
-    "label-download": "sauvegarder",
-    "label-upload": "charger",
-    "label-focus-display": "Focus",
-    "label-unfocus-display": "Travail",
+	"label-bracelet-droit": "Tissage droit",
+	"label-bracelet-deyote": "Tissage Peyote",
+	"label-bracelet-peyote-v": "Tissage Peyote Vertical",
+	"label-create-bracelet": "Créer un bracelet",
+	"label-generate-pattern": "Ajouter un motif",
+	"label-download": "sauvegarder",
+	"label-upload": "charger",
+	"label-focus-display": "Focus",
+	"label-unfocus-display": "Travail",
 
-    "placeholder-import-input": "Copier la sauvegarder"
+	"placeholder-import-input": "Copier la sauvegarder"
 }

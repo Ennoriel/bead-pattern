@@ -1,15 +1,19 @@
 {
-  "name": "miyuki",
-  "version": "1.0.0",
-  "description": "Lightweight Single Page Application for making bead weaving patterns.",
-  "main": "index.js",
-  "scripts": {
-    "start": "node server.js"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "express": "^4.17.1"
-  }
+	"name": "miyuki",
+	"version": "1.0.0",
+	"description": "Lightweight Single Page Application for making bead weaving patterns.",
+	"main": "index.js",
+	"scripts": {
+		"start": "node server.js",
+		"prettier": "prettier --write --print-width 100 --single-quote --jsx-bracket-same-line --arrow-parens avoid --end-of-line lf --tab-width 4 --use-tabs ."
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"express": "^4.17.1"
+	},
+	"devDependencies": {
+		"prettier": "^2.2.0"
+	}
 }
