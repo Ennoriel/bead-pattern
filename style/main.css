@@ -49,14 +49,9 @@ button {
 }
 
 .caneva-container-centering {
+	user-select: none;
 	text-align: center;
 	margin: 10px;
-
-	user-select: none;
-	-moz-user-select: none;
-	-khtml-user-select: none;
-	-webkit-user-select: none;
-	-o-user-select: none;
 }
 
 .caneva-container-centering:empty {
@@ -92,13 +87,6 @@ button {
 .action-bead {
 	border: 1px solid rgba(0, 0, 0, 0);
 	cursor: default;
-
-	-webkit-touch-callout: none;
-	-webkit-user-select: none;
-	-khtml-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	user-select: none;
 }
 
 .action-bead:hover {
@@ -110,12 +98,12 @@ button {
 	font-size: 24px;
 }
 
-.delete-col {
-	margin-top: 30px;
-}
-
 .insert-col {
 	margin-top: 17px;
+}
+
+.delete-col {
+	margin-top: 30px;
 }
 
 .top-delete-bead {
@@ -185,6 +173,7 @@ input[type='radio'] {
 	display: inline-block;
 	vertical-align: middle;
 	cursor: default;
+	position: relative;
 }
 
 img {
@@ -199,18 +188,24 @@ img {
 		text-overflow: ellipsis;
 		overflow: hidden;
 		display: inline-block;
-		font-size: 12px;
+		font-size: 14px;
 		width: auto;
 		vertical-align: middle;
 	}
 
 	.menu-label-h {
-		max-width: 0px;
-		transition: ease-in-out max-width 1s;
+		height: 0;
+		position: absolute;
+		top: 40px;
+		left: 10px;
 	}
 
 	.menu-item:hover .menu-label-h {
-		max-width: 130px;
+		height: auto;
+		padding: 3px 8px;
+		background-color: #eee;
+		border-radius: 5px;
+
 	}
 
 	.menu-label-v {
