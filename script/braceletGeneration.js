@@ -143,7 +143,7 @@ class Trame {
 		perle.setAttribute('row-nb', iRow);
 		addBeadStyle(perle, lettreCouleur);
 		perle.setAttribute('oncontextmenu', 'return false;');
-		perle.setAttribute('onmouseover', this.objectHook() + 'handleBeadMouseOver(this)');
+		perle.setAttribute('onmouseover', this.objectHook() + 'paintBead(this)');
 		return perle;
 	}
 
@@ -189,7 +189,7 @@ class Trame {
 		}
 	}
 
-	handleBeadMouseOver(perle) {
+	paintBead(perle) {
 		if (!isFocusDisplay) {
 			if (leftClickPressed && pinceau !== undefined) {
 				if (pinceau.includes('pattern-')) {
