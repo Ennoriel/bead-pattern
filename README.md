@@ -27,6 +27,7 @@ Lightweight Single Page Application for making bead weaving patterns.
       - [/] désélectionné lorsque appliqué à lui même (car regénéré)
       - [/] envoie une erreur lors du rendu (suppression d'un id html ?)
     - [ ] suppression de ligne/colonne en peyote/peyoteV déplace les perles
+    - [ ] MaJ des dimensions à l'import
 
 # CREDITS :
 

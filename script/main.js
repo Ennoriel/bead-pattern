@@ -1,3 +1,6 @@
+/**
+ * Inits all scripts
+ */
 function main() {
 	initColors();
 	initMouse();
@@ -8,36 +11,34 @@ function main() {
 	loadLanguage('fr');
 }
 
+/**
+ * Inits color picker
+ */
 function initColorPicker() {
 	colorPicker = new ColorPickerHandler('color-picker');
 }
 
+/**
+ * Inits the color map
+ */
 function initColors() {
-	lettres = [...Array(20).keys()].map(x => String.fromCharCode(x + 97));
+	alphabet = [...Array(20).keys()].map(x => String.fromCharCode(x + 97));
 	colors = new Map();
-	pinceau = '';
+	currentColor = '';
 }
 
+/**
+ * Inits the mouse tracking variables
+ */
 function initMouse() {
 	leftClickPressed = false;
 	rightClickPressed = false;
 	isFocusDisplay = false;
 }
 
-function computeLengthHint() {
-	var nb = document.getElementById('input-longueur').value;
-	var perleLength = tissage === TISSAGE.PEYOTE_V ? 0.137 : 0.16;
-	document.getElementById('hint-longueur').innerHTML =
-		'L : ' + (nb * perleLength).toFixed(1) + ' cm';
-}
-
-function computeWidthHint() {
-	var nb = document.getElementById('input-largeur').value;
-	var perleWidth = tissage === TISSAGE.PEYOTE_V ? 0.16 : 0.137;
-	document.getElementById('hint-largeur').innerHTML =
-		'l : ' + (nb * perleWidth).toFixed(1) + ' cm';
-}
-
+/**
+ * Inits the main bracelet dimension
+ */
 function initDimension() {
 	document.getElementById('input-largeur').value = 6;
 	document.getElementById('input-longueur').value = 6;
@@ -46,6 +47,9 @@ function initDimension() {
 	computeWidthHint();
 }
 
+/**
+ * Inits the tissage variable
+ */
 function initTissage() {
 	if (document.getElementById('droit').checked) {
 		tissage = TISSAGE.DROIT;
@@ -56,6 +60,9 @@ function initTissage() {
 	}
 }
 
+/**
+ * Inits the factory
+ */
 function initFactory() {
 	factory = new Factory();
 }

@@ -1,3 +1,7 @@
+/**
+ * Loads language file
+ * @param {string} lang language code [available: fr en] 
+ */
 function loadLanguage(lang) {
 	fetch('./public/lang/' + lang + '.json')
 		.then(response => response.json())

@@ -1,3 +1,8 @@
+
+/**
+ * Method that reads all <include> elements and load its content
+ * https://stackoverflow.com/questions/44476100/how-to-make-an-xmlhttprequest-that-loads-an-html-file-into-the-div
+ */
 async function importIncludeElements() {
 	let includeElements = document.getElementsByTagName('include');
 	for (let i = 0; i < includeElements.length; i++) {
@@ -23,4 +28,4 @@ async function importIncludeElements() {
 				});
 		}
 	}
-} // https://stackoverflow.com/questions/44476100/how-to-make-an-xmlhttprequest-that-loads-an-html-file-into-the-div
+}

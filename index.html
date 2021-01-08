@@ -19,10 +19,9 @@
 		<script src="script/store.js"></script>
 		<script src="script/braceletGeneration.js"></script>
 		<script src="script/inputColorGeneration.js"></script>
-		<script src="script/inputColorEvents.js"></script>
 		<script src="script/braceletUtils.js"></script>
 		<script src="script/trame.event.js"></script>
-
+		<script src="script/exportImport.js"></script>
 		<script src="script/main.js"></script>
 	</head>
 	<body>
@@ -118,7 +117,7 @@
 			</span>
 
 			<span class="menu-block">
-				<span class="menu-item" onclick="factory.generateTrame()">
+				<span class="menu-item" onclick="factory.generateBracelet()">
 					<img src="public/icons/box.svg" name="createBracelet" />
 					<label
 						id="label-create-bracelet"
@@ -141,7 +140,7 @@
 			</span>
 
 			<span class="menu-block">
-				<span id="export-pattern" class="menu-item" onclick="factory.export()">
+				<span id="export-pattern" class="menu-item" onclick="exportWork()">
 					<img src="public/icons/download.svg" name="download" />
 					<label id="label-download" class="menu-label menu-label-h" for="download">
 						sauvegarder
@@ -154,7 +153,7 @@
 					autocomplete="off"
 					placeholder="Coller la sauvegarde"
 				/>
-				<span id="import-pattern" class="menu-item" onclick="factory.import()">
+				<span id="import-pattern" class="menu-item" onclick="importWork()">
 					<img src="public/icons/upload.svg" name="upload" />
 					<label id="label-upload" class="menu-label menu-label-h" for="upload"
 						>charger</label
@@ -227,7 +226,7 @@
 	</body>
 	<script>
 		main();
-		factory.generateTrame();
+		factory.generateBracelet();
 
 		importIncludeElements();
 	</script>

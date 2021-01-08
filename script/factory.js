@@ -1,29 +1,36 @@
+/**
+ * Factory, handles trame generation and events
+ */
 class Factory {
 	constructor() {
 		this.bracelet = new Bracelet();
 		this.patterns = [];
 	}
 
+	/**
+	 * gets all trames, bracelet and patterns
+	 */
 	get all() {
 		return [this.bracelet, ...this.patterns];
 	}
 
-	get lastPattern() {
-		return this.patterns[this.patterns.size];
-	}
-
-	get htmlHooks() {
-		return [...this.all.htmlIdHook];
-	}
-
+	/**
+	 * Gets the trame associated to the html id
+	 * @param {string} htmlId html id of one of a trame
+	 */
 	getAssociatedTrame(htmlId) {
 		return this.all.find(trame => trame.htmlIdHook === htmlId);
 	}
 
-	generatePattern(dimension, perlesPeintesString) {
+	/**
+	 * Generate a pattern from scratch or from exported dimension & representation
+	 * @param {Dimension} dimension dimension of the exported dimension
+	 * @param {String} exportedPattern exported representation of the pattern
+	 */
+	generatePattern(dimension, exportedPattern) {
 		if (dimension) {
 			let pattern = new Pattern(this.patterns.length);
-			pattern.generateTrame(dimension, perlesPeintesString);
+			pattern.generateTrame(dimension, exportedPattern);
 			this.patterns.push(pattern);
 		} else {
 			if (this.patterns.length < 5) {
@@ -34,12 +41,10 @@ class Factory {
 		}
 	}
 
-	deletePattern(patterNb) {
-		this.patterns[patterNb].deletePattern();
-		this.patterns.splice(patterNb, 1);
-	}
-
-	generateTrame() {
+	/**
+	 * Generates the main bracelet
+	 */
+	generateBracelet() {
 		let braceletDimension = new Dimension(
 			document.getElementById('input-largeur').value,
 			document.getElementById('input-longueur').value
@@ -47,80 +52,28 @@ class Factory {
 		this.bracelet.generateTrame(braceletDimension);
 	}
 
-	removeAllPatterns() {
+	/**
+	 * Deletes a pattern
+	 * @param {Number} patterNb pattern number to delete
+	 */
+	deletePattern(patterNb) {
+		this.patterns[patterNb].deletePattern();
+		this.patterns.splice(patterNb, 1);
+	}
+
+	/**
+	 * Deletes all patterns
+	 */
+	deleteAllPatterns() {
 		if (this.patterns.length) {
 			document.getElementById(this.patterns[0].containerHtmlIdHook).innerHTML = '';
 			this.patterns.length = 0;
 		}
 	}
 
-	export() {
-		let exportString = this.exportColors();
-		exportString += ';';
-		exportString += this.exportBracelet();
-		exportString += ';';
-		exportString += this.exportPatterns();
-		document.getElementById('import-input').value = exportString;
-		document.getElementById('import-input').select();
-	}
-
-	exportColors() {
-		return Array.from(colors.values()).join('-');
-	}
-
-	exportBracelet() {
-		return this.bracelet.export();
-	}
-
-	exportPatterns() {
-		return this.patterns.map(pattern => pattern.export()).join('|');
-	}
-
-	import() {
-		let exportString = document.getElementById('import-input').value;
-		let exportTab = exportString.split(';');
-		this.importBracelet(exportTab[0], exportTab[1]);
-		this.importPatterns(exportTab[2]);
-	}
-
-	importBracelet(exportedColors, exportBracelet) {
-		let exportBraceletTab = exportBracelet.split('-');
-
-		let importedTissage = parseInt(exportBraceletTab[0]);
-		switch (importedTissage) {
-			case TISSAGE.DROIT:
-				document.getElementById('droit').checked = true;
-				break;
-			case TISSAGE.PEYOTE:
-				document.getElementById('peyote').checked = true;
-				break;
-			case TISSAGE.PEYOTE_V:
-				document.getElementById('peyote-v').checked = true;
-				break;
-		}
-
-		let importedDimension = new Dimension(exportBraceletTab[1], exportBraceletTab[2]);
-		document.getElementById('input-longueur').value = importedDimension.length;
-		document.getElementById('input-largeur').value = importedDimension.width;
-		this.bracelet = new Bracelet();
-		this.bracelet.generateTrame(
-			importedDimension,
-			exportedColors.split('-'),
-			exportBraceletTab[3]
-		);
-	}
-
-	importPatterns(importedPatterns) {
-		this.removeAllPatterns();
-		if (!!importedPatterns) {
-			importedPatterns.split('|').forEach(importedPattern => {
-				let importedPatternTab = importedPattern.split('-');
-				let importedDimension = new Dimension(importedPatternTab[0], importedPatternTab[1]);
-				this.generatePattern(importedDimension, importedPatternTab[2]);
-			});
-		}
-	}
-
+	/**
+	 * Makes the working area in focus mode, to make a snapshot
+	 */
 	focusDisplay() {
 		isFocusDisplay = true;
 		document.getElementById('focus-display').setAttribute('hidden', 'true');
@@ -140,12 +93,15 @@ class Factory {
 		Array.from(beadQty.keys()).forEach(colorKey => {
 			document.getElementById('label-color-' + colorKey).removeAttribute('hidden');
 			document.getElementById('label-color-' + colorKey).innerHTML = beadQty.get(colorKey);
-			document.getElementById('pinceau-' + colorKey).setAttribute('hidden', 'true');
+			document.getElementById('currentColor-' + colorKey).setAttribute('hidden', 'true');
 		});
 
 		this.bracelet.focusDisplay();
 	}
 
+	/**
+	 * Makes the working area in working mode, to add new beads
+	 */
 	unfocusDisplay() {
 		isFocusDisplay = false;
 		document.getElementById('unfocus-display').setAttribute('hidden', 'true');
@@ -164,7 +120,7 @@ class Factory {
 		Array.from(colors.keys()).forEach(colorKey => {
 			document.getElementById('label-color-' + colorKey).setAttribute('hidden', 'true');
 			document.getElementById('label-color-' + colorKey).innerHTML = '';
-			document.getElementById('pinceau-' + colorKey).removeAttribute('hidden');
+			document.getElementById('currentColor-' + colorKey).removeAttribute('hidden');
 		});
 
 		this.bracelet.unfocusDisplay();

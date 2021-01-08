@@ -4,11 +4,10 @@
  * Also paint the clicked bead 
  */
 document.addEventListener('mousedown', function (event) {
-	if (factory.bracelet.aEteGenere && event.button == 0) {
+	if (event.button == 0) {
 		leftClickPressed = true;
 		getFocusedBead(event.target)?.paintBead(event.target);
-	}
-	if (factory.bracelet.aEteGenere && event.button == 2) {
+	} else if (event.button == 2) {
 		rightClickPressed = true;
 		getFocusedBead(event.target)?.paintBead(event.target);
 	}
@@ -19,10 +18,9 @@ document.addEventListener('mousedown', function (event) {
  * whether the left or right click has been pressed.
  */
 document.addEventListener('mouseup', function (event) {
-	if (factory.bracelet.aEteGenere && event.button == 0) {
+	if (event.button == 0) {
 		leftClickPressed = false;
-	}
-	if (factory.bracelet.aEteGenere && event.button == 2) {
+	} else if (event.button == 2) {
 		rightClickPressed = false;
 	}
 });

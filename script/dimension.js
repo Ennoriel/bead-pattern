@@ -1,3 +1,6 @@
+/**
+ * Dimension object
+ */
 class Dimension {
 	constructor(width, length = width) {
 		this.width = parseInt(width);

@@ -1,7 +1,11 @@
+/**
+ * add color to the color array and render the input color
+ * @param {*} color existing color
+ */
 function addColor(color = null) {
 	if (colors.size >= 20) return;
 
-	var key = lettres[colors.size];
+	var key = alphabet[colors.size];
 	color = color
 		? color
 		: '#' +
@@ -32,7 +36,7 @@ function addColor(color = null) {
 	input.setAttribute('onchange', 'handleColorChange("' + key + '")');
 	input.setAttribute('onClick', 'colorPicker.handleOpenColorPicker("' + key + '", this.value)');
 
-	radioPinceau = generateRadioInput(key);
+	radioPinceau = renderRadioInput(key);
 
 	spanContainer.appendChild(label);
 	spanContainer.appendChild(input);
@@ -41,12 +45,16 @@ function addColor(color = null) {
 	inputColorContainer.appendChild(spanContainer);
 }
 
-function generateRadioInput(key) {
+/**
+ * renders a radio input for color check
+ * @param {*} key color key
+ */
+function renderRadioInput(key) {
 	radioPinceau = document.createElement('input');
 	radioPinceau.setAttribute('type', 'radio');
-	radioPinceau.setAttribute('name', 'pinceau');
-	radioPinceau.setAttribute('id', 'pinceau-' + key);
-	radioPinceau.setAttribute('class', 'radio-pinceau');
+	radioPinceau.setAttribute('name', 'currentColor');
+	radioPinceau.setAttribute('id', 'currentColor-' + key);
+	radioPinceau.setAttribute('class', 'radio-currentColor');
 	radioPinceau.setAttribute('value', key);
 	radioPinceau.setAttribute('onclick', 'selectPinceau("' + key + '")');
 	radioPinceau.setAttribute('autocomplete', 'off');
@@ -54,19 +62,28 @@ function generateRadioInput(key) {
 	return radioPinceau;
 }
 
+/**
+ * handle color array change
+ * @param {*} key 
+ */
 function handleColorChange(key) {
 	let colorInput = document.getElementById('input-color-' + key);
 	if (colorInput.checkValidity()) {
 		removeClassname(colorInput, 'blink');
-		let couleur = colorInput.value;
-		addColorStyle(colorInput, couleur);
-		colors.set(key, couleur);
+		let color = colorInput.value;
+		addColorStyle(colorInput, color);
+		colors.set(key, color);
 		factory.all.forEach(trame => trame.handleColorChange(key));
 	} else {
 		addClassname(colorInput, 'blink');
 	}
 }
 
+/**
+ * render input color change
+ * @param {*} element input color
+ * @param {*} color new color
+ */
 function addColorStyle(element, color) {
 	element.style.backgroundColor = color;
 	if (isDark(color)) {
@@ -75,3 +92,30 @@ function addColorStyle(element, color) {
 		element.style.color = 'black';
 	}
 }
+
+/**
+ * Selects color
+ * @param {string} key color key
+ */
+function selectPinceau(key) {
+	currentColor = key;
+}
+
+/**
+ * Renders initial color inputs
+ * @param {Array<String>} newColors exported colors
+ */
+function renderColors(newColors) {
+		// removes color input
+		for (let i = 0; i < colors.size; i++) {
+			document.getElementById('container-couleur-' + alphabet[i]).remove();
+		}
+		// init colors
+		initColors();
+		// imports colors or initialize first color
+		if (newColors) {
+			newColors.forEach(color => addColor(color));
+		} else {
+			addColor();
+		}
+	}
