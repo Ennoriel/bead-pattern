@@ -155,6 +155,57 @@ input[type='radio'] {
 	vertical-align: middle;
 }
 
+#dev-info {
+	position: fixed;
+	height: 20px;
+	top: 0px;
+	background-color: white;
+	margin: 0 10px;
+	z-index: 2;
+	text-align: center;
+	width: 100%;
+	font-size: 14px;
+	background-color: #f6f6f6;
+
+}
+
+#dev-info p:nth-child(1) { --delay-animation: 0s }
+#dev-info p:nth-child(2) { --delay-animation: 8s }
+#dev-info p:nth-child(3) { --delay-animation: 16s }
+
+#dev-info p {
+	margin: 0;
+	text-align: center;
+	width: 100%;
+	position: absolute;
+	top: -20px;
+	animation: stretch 24s infinite var(--delay-animation);
+}
+
+@keyframes stretch {
+	0%{
+    transform: translateY(0);
+  }
+  33%{
+    transform: translateY(20px);
+  }
+  66% {
+    transform: translateY(40px);
+    opacity: 1;
+  }
+  67% {
+    opacity: 0;
+  }
+  99% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+	
+}
+  
+
 /* menu bar */
 #menu-bar {
 	position: fixed;
@@ -162,8 +213,8 @@ input[type='radio'] {
 	align-items: center;
 	justify-content: space-between;
 	width: calc(100vw - 20px);
-	height: 40px;
-	top: 0px;
+	height: 30px;
+	top: 20px;
 	background-color: white;
 	margin: 0 10px;
 	z-index: 2;
@@ -248,7 +299,6 @@ img {
 }
 
 #input-color {
-	position: relative;
 	float: right;
 	display: flex;
 	flex-direction: column;

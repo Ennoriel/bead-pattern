@@ -14,7 +14,8 @@ Lightweight Single Page Application for making bead weaving patterns.
     - [/] ajouter un bouton pour n'afficher que le bracelet
     - [/] ajouter un mode peyote vertical
     - [ ] freezer la peinture lorsque le colorpicker est ouvert
-    - [ ]
+    - [ ] ajouter un ruban "en cours de dev"
+    - [ ] rendre traduisible et traduire les filtres du beadpanel
 
 # BUG :
 
@@ -33,6 +34,7 @@ Lightweight Single Page Application for making bead weaving patterns.
     - [ ] Pattern appliqué sur lui même
     - [ ] affichage du nombre de perle décale l'input lorsque trop grand
     - [ ] l'affichage du conteneur des patterns et du bracelet à une marge inférieur
+    - [ ] lorsque l'on applique un pattern, la preview ne disparait pas toujours
 
 # CREDITS :
 
