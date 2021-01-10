@@ -33,23 +33,7 @@ function generateActionBead() {
 function addBeadStyle(bead, colorKey) {
 	var color = colors.get(colorKey);
 	if (color) {
-		if (tissage === TISSAGE.PEYOTE_V) {
-			bead.setAttribute(
-				'style',
-				'background: linear-gradient(' + color + 'bb, ' + color + ', ' + color + 'bb);'
-			);
-		} else {
-			bead.setAttribute(
-				'style',
-				'background: linear-gradient(0.25turn, ' +
-					color +
-					'bb, ' +
-					color +
-					', ' +
-					color +
-					'bb);'
-			);
-		}
+		bead.setAttribute('style', color.computeBeadStyle())
 	}
 }
 

@@ -12,7 +12,7 @@ function addColor(color = null) {
 		  Math.floor(Math.random() * 16777215)
 				.toString(16)
 				.padStart(6, '0');
-	colors.set(key, color);
+	colors.set(key, new HexColor(color));
 
 	inputColorContainer = document.getElementById('input-color');
 
@@ -30,11 +30,10 @@ function addColor(color = null) {
 	input.setAttribute('class', 'form-input');
 	input.setAttribute('autocomplete', 'off');
 	input.setAttribute('maxlength', '7');
-	input.setAttribute('pattern', '#[A-Fa-f0-9]{6}');
+	input.setAttribute('pattern', '(#[A-Fa-f0-9]{6})|(DB\\d{4}[LF]?)');
 	input.setAttribute('value', color);
 	addColorStyle(input, color);
-	input.setAttribute('onchange', 'handleColorChange("' + key + '")');
-	input.setAttribute('onClick', 'colorPicker.handleOpenColorPicker("' + key + '", this.value)');
+	input.setAttribute('onClick', 'colorPicker.handleOpenColorPicker("' + key + '")');
 
 	radioPinceau = renderRadioInput(key);
 
@@ -64,15 +63,17 @@ function renderRadioInput(key) {
 
 /**
  * handle color array change
- * @param {*} key 
+ * @param {String} key 
+ * @param {Color} color 
  */
-function handleColorChange(key) {
+function handleColorChange(key, color) {
 	let colorInput = document.getElementById('input-color-' + key);
+
 	if (colorInput.checkValidity()) {
 		removeClassname(colorInput, 'blink');
-		let color = colorInput.value;
-		addColorStyle(colorInput, color);
-		colors.set(key, color);
+		addColorStyle(colorInput, color.inputColor);
+		colors.set(key, color);	
+
 		factory.all.forEach(trame => trame.handleColorChange(key));
 	} else {
 		addClassname(colorInput, 'blink');

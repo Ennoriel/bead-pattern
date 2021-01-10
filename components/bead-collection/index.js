@@ -3,7 +3,9 @@
  */
 class BeadPanel {
 
-	constructor() {
+	constructor(callback) {
+		this.clickCallback = callback
+
 		this.initFilters();
 		this.initBeads();
 
@@ -44,10 +46,7 @@ class BeadPanel {
 			filter.entries.forEach((filterEntry, entryIndex) => {
 				let input = document.createElement('input');
 				input.type = 'checkbox';
-				input.setAttribute(
-					'onClick',
-					'beadPanel.handleFilterChange(' + filterIndex + ',' + entryIndex + ')'
-				);
+				input.addEventListener('click', () => this.handleFilterChange(filterIndex, entryIndex));
 				if (this.selectedFilters[filterIndex].entries.includes(entryIndex)) {
 					input.checked = true;
 				}
@@ -65,7 +64,9 @@ class BeadPanel {
 	 * Inits beads attribute and then calls the rendering method
 	 */
 	async initBeads() {
-		this.beads = await fetch('./public/beads.json').then(response => response.json());
+		beadCollection = (await fetch('./public/beads.json')
+														.then(response => response.json()))
+														.map(bead => new DbColor(bead));
 		this.renderBeadThumbails();
 	}
 
@@ -76,7 +77,7 @@ class BeadPanel {
 		const thumbnailContainer = document.getElementById('thumbnails');
 		thumbnailContainer.innerHTML = '';
 
-		this.beads.filter(bead => 
+		beadCollection.filter(bead => 
 			this.selectedFilters.filter(filter => filter.entries.length)
 					.every(filter =>
 						typeof bead[filter.id] === 'number'
@@ -85,10 +86,10 @@ class BeadPanel {
 					)
 		).forEach(bead => {
 			let container = document.createElement('div');
-			container.id = bead.i;
+			container.id = bead.index;
 
 			let label = document.createElement('label');
-			label.innerHTML = bead.i;
+			label.innerHTML = bead.index;
 
 			let cart = document.createElement('img');
 			cart.addEventListener('click', () => alert('not yet implemented'));
@@ -96,8 +97,8 @@ class BeadPanel {
 
 			let img = document.createElement('img');
 			img.loading = 'lazy';
-			img.src = 'public/thumbnails/' + bead.i + '.jpg';
-			img.addEventListener('click', () => this.handleThumbnailClick(bead.i));
+			img.src = 'public/thumbnails/' + bead.index + '.jpg';
+			img.addEventListener('click', () => this.handleThumbnailClick(bead));
 
 			container.append(label);
 			container.append(cart);
@@ -127,7 +128,7 @@ class BeadPanel {
 	 * @param {number}   entryIndex     entry index in the filter category
 	 */
 	updateSelectedFilters(filterIndex, entryIndex) {
-		if (!filterIndex && !entryIndex) {
+		if (filterIndex === undefined && entryIndex === undefined) {
 			this.selectedFilters.forEach(filter => (filter.entries = []));
 		} else {
 			if (this.selectedFilters[filterIndex].entries.includes(entryIndex)) {
@@ -158,10 +159,7 @@ class BeadPanel {
 				myFilter.entries.sort().forEach(filterEntry => {
 					let span = document.createElement('span');
 					span.innerHTML = this.filters[index].entries[filterEntry];
-					span.setAttribute(
-						'onclick',
-						'beadPanel.handleDeleteFilter(' + index + ', ' + filterEntry + ')'
-					);
+					span.addEventListener('click', () => this.handleDeleteFilter(index, filterEntry));
 					selectedFilters.append(span);
 				});
 			}
@@ -170,7 +168,7 @@ class BeadPanel {
 		if(isOneFilterSelected) {
 			let span = document.createElement('span');
 			span.innerHTML = 'raz';
-			span.setAttribute('onclick', 'beadPanel.handleDeleteAllFilters()');
+			span.addEventListener('click', () => this.handleDeleteAllFilters());
 			document.getElementById('selected-filters').prepend(span);
 		}
 
@@ -216,21 +214,22 @@ class BeadPanel {
 	}
 
 	/**
-	 * Focuses a bead thumbnail and selects it as the brush color
+	 * Focuses a bead thumbnail and adds propagate the event
 	 * 
-	 * @param {string}   beadIndex    bead index
+	 * @param {DbColor}   bead    bead
 	 */
-	handleThumbnailClick(beadIndex) {
-		if (this.bigBead === beadIndex) {
-			removeClassname(document.getElementById(this.bigBead), 'thumbnail-focus');
-			this.bigBead = undefined;
-			// TODO put DBxxxx in inputColor
+	handleThumbnailClick(bead) {
+		this.setBead(bead);
+		this.clickCallback(bead);
+	}
+
+	setBead(bead) {
+		if (this.selectedBead) {
+			removeClassname(document.getElementById(this.selectedBead.index), 'thumbnail-focus');
 		}
-		if (this.bigBead) {
-			removeClassname(document.getElementById(this.bigBead), 'thumbnail-focus');
-		}
-		this.bigBead = beadIndex;
-		addClassname(document.getElementById(beadIndex), 'thumbnail-focus');
+		if (!bead) return;
+		this.selectedBead = bead;
+		addClassname(document.getElementById(bead.index), 'thumbnail-focus');
 	}
 
 	/**
@@ -253,4 +252,4 @@ class BeadPanel {
 	}
 }
 
-const beadPanel = new BeadPanel();
+colorPicker.handleBeadCollectionLoad()

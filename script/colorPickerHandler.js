@@ -1,5 +1,6 @@
 /**
  * color picker handler, exposes util methods to open, close and handle a color change
+ * @property {boolean} isOpen indicates whether the bead panel and color picker are open or not
  */
 class ColorPickerHandler {
 
@@ -13,7 +14,7 @@ class ColorPickerHandler {
 		this.pickerContainer = document.getElementById('picker');
 
 		this.colorPickerObject = ColorPicker(this.pickerContainer, hex =>
-			this.handleColorPickerChange(hex)
+			this.handleColorPickerChange(new HexColor(hex))
 		);
 		this.isOpen = false;
 
@@ -23,7 +24,7 @@ class ColorPickerHandler {
 		);
 
 		// Event that tracks click in order to close the color picker when needed
-		window.addEventListener('click', e => this.handleInputColorAutoClosing(e.target));
+		window.addEventListener('mousedown', e => this.handleInputColorAutoClosing(e.target));
 	}
 
 	/**
@@ -44,24 +45,41 @@ class ColorPickerHandler {
 
 	/**
 	 * Handles user color change from the color picker
-	 * @param {string} hex hexadecimal color
+	 * @param {Color} color color
 	 */
-	handleColorPickerChange(hex) {
-		this.hex = hex;
-		document.getElementById('input-color-' + this.key).value = this.hex;
-		handleColorChange(this.key);
+	handleColorPickerChange(color) {
+
+		// Condition to prevent the propagation of the events when the picker and the bead panel open
+		if (!this.isOpen) return;
+		if (color instanceof HexColor && this.color instanceof DbColor && color.hex === this.color.dominantColor) return;
+
+		this.color = color
+		if (color instanceof DbColor) {
+			this.colorPickerObject.setHex(this.color.inputColor);
+		} else {
+			this.beadPanel.setBead()
+		}
+		document.getElementById('input-color-' + this.key).value = this.color.inputValue;
+		handleColorChange(this.key, this.color);
 	}
 
 	/**
 	 * Handles color picker opening
-	 * @param {*} key key of the color
-	 * @param {*} color initial color
+	 * @param {String} key key of the color
 	 */
-	handleOpenColorPicker(key, color) {
+	handleOpenColorPicker(key) {
 		this.key = key;
-		this.hex = color;
+		this.color = colors.get(key)
+		
 		this.container.removeAttribute('hidden');
-		this.colorPickerObject.setHex(this.hex);
+
+		this.colorPickerObject.setHex(this.color.inputColor);
+		if(this.color instanceof DbColor) {
+			this.beadPanel.setBead(this.color)
+		} else {
+			this.beadPanel.setBead()
+		}
+		
 		setTimeout(() => (this.isOpen = true), 1);
 	}
 
@@ -73,5 +91,9 @@ class ColorPickerHandler {
 		this.key = undefined;
 		this.container.setAttribute('hidden', 'true');
 		removeClassname(this.container, 'color-picker-opacity');
+	}
+
+	handleBeadCollectionLoad() {
+		this.beadPanel = new BeadPanel((bead) => {this.handleColorPickerChange(bead)});
 	}
 }

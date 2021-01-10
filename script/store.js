@@ -21,3 +21,19 @@ var isFocusDisplay;
 
 // trame factory, handles action on trames
 var factory;
+
+/**
+ * bead collection, array of
+ *   {
+ *     "i":"DB0001",  -- id
+ *     "c":6,         -- Color         [may be a string or an array]
+ *     "g":1,         -- Glass           | |
+ *     "f":11,        -- Finish          | |
+ *     "d":2,         -- Die             | |
+ *     "z":2,         -- Galvanizing     | |
+ *     "p":3,         -- Plating         | |
+ *     "o":"#09090f", -- dominant color in the picture
+ *     "m":"#d3d7e2"  -- lightest color of the 4 average colors in the picture
+ *   }
+ */
+var beadCollection
