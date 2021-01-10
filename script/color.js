@@ -3,6 +3,18 @@ class Color {
     let rotation = tissage === TISSAGE.PEYOTE_V ? '': '0.25turn,'
     return `background: linear-gradient(${rotation}${lightestColor},${dominantColor},${lightestColor});`
   }
+
+  /**
+   * return a new instance of DbColor or HexColor
+   * @param {String} stringColor string color, either #abcdef or DB1234 
+   */
+  static newInstance(stringColor) {
+    if (stringColor.startsWith('DB')) {
+      return beadCollection.filter(bead => bead.index === stringColor)[0]
+    } else {
+      return new HexColor(stringColor)
+    }
+  }
 }
 
 class HexColor extends Color {

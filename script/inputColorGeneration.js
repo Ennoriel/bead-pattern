@@ -12,7 +12,9 @@ function addColor(color = null) {
 		  Math.floor(Math.random() * 16777215)
 				.toString(16)
 				.padStart(6, '0');
-	colors.set(key, new HexColor(color));
+
+	color = Color.newInstance(color);
+	colors.set(key, color);
 
 	inputColorContainer = document.getElementById('input-color');
 
@@ -31,8 +33,8 @@ function addColor(color = null) {
 	input.setAttribute('autocomplete', 'off');
 	input.setAttribute('maxlength', '7');
 	input.setAttribute('pattern', '(#[A-Fa-f0-9]{6})|(DB\\d{4}[LF]?)');
-	input.setAttribute('value', color);
-	addColorStyle(input, color);
+	input.setAttribute('value', color.inputValue);
+	addColorStyle(input, color.inputColor);
 	input.setAttribute('onClick', 'colorPicker.handleOpenColorPicker("' + key + '")');
 
 	radioPinceau = renderRadioInput(key);

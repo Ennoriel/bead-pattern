@@ -16,7 +16,7 @@ function exportWork() {
  * Exports the color
  */
 function exportColors() {
-  return Array.from(colors.values()).join('-');
+  return Array.from(colors.values()).map(c => c.inputValue).join('-');
 }
 
 /**
