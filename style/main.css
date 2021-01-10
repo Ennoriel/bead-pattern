@@ -69,14 +69,18 @@ button {
 	flex-direction: column;
 	width: 16px;
 	margin-bottom: 15px;
-	margin-left: 0.67px;
+	margin-left: 0.5px;
 }
 
 .bead {
 	width: 16px;
 	height: 16px;
 	border: 1px solid black;
-	margin-top: -0.69px;
+	margin-top: -1px;
+}
+
+.color-bead {
+	background-color: white;
 }
 
 .bead-no-border {
@@ -160,7 +164,7 @@ input[type='radio'] {
 	height: 20px;
 	top: 0px;
 	background-color: white;
-	margin: 0 10px;
+	margin: 0;
 	z-index: 2;
 	text-align: center;
 	width: 100%;
@@ -286,12 +290,12 @@ img {
 #trame-container {
 	display: flex;
 	flex-direction: column;
-	height: calc(100vh - 75px);
+	height: calc(100vh - 60px);
 	overflow: auto;
 }
 
 .trame-container-work {
-	margin: 60px 120px 15px 5px;
+	margin: 60px 120px 0px 5px;
 }
 
 .trame-container-focused {
@@ -306,6 +310,12 @@ img {
 	overflow: auto;
 	height: calc(100vh - 60px);
 	width: 115px;
+}
+
+#input-color label {
+	display: inline-block;
+	width: 30px;
+	text-align: right;
 }
 
 #input-color span input {

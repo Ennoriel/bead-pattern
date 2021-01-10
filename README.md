@@ -32,8 +32,8 @@ Lightweight Single Page Application for making bead weaving patterns.
     - [ ] Mise à jour de la bille sélectionné après suppression d'un filtre qui la cache
     - [ ] Corriger les bordures qui apparaissent en double selon certains zoom
     - [ ] Pattern appliqué sur lui même
-    - [ ] affichage du nombre de perle décale l'input lorsque trop grand
-    - [ ] l'affichage du conteneur des patterns et du bracelet à une marge inférieur
+    - [/] affichage du nombre de perle décale l'input lorsque trop grand
+    - [/] l'affichage du conteneur des patterns et du bracelet à une marge inférieur
     - [ ] lorsque l'on applique un pattern, la preview ne disparait pas toujours
 
 # CREDITS :
