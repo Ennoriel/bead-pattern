@@ -87,6 +87,7 @@ class BeadPanel {
 		).forEach(bead => {
 			let container = document.createElement('div');
 			container.id = bead.index;
+			if (this.selectedBead && this.selectedBead.index === bead.index) addClassname(container, 'thumbnail-focus')
 
 			let label = document.createElement('label');
 			label.innerHTML = bead.index;
@@ -225,7 +226,8 @@ class BeadPanel {
 
 	setBead(bead) {
 		if (this.selectedBead) {
-			removeClassname(document.getElementById(this.selectedBead.index), 'thumbnail-focus');
+			let element = document.getElementById(this.selectedBead.index)
+			if (element) removeClassname(element, 'thumbnail-focus');
 		}
 		if (!bead) return;
 		this.selectedBead = bead;

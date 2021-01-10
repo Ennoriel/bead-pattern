@@ -90,6 +90,7 @@ class ColorPickerHandler {
 		this.isOpen = false;
 		this.key = undefined;
 		this.container.setAttribute('hidden', 'true');
+		this.beadPanel.handleDeleteAllFilters()
 		removeClassname(this.container, 'color-picker-opacity');
 	}
 
