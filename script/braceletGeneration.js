@@ -183,7 +183,7 @@ class Trame {
 		perle.setAttribute('row-nb', iRow);
 		addBeadStyle(perle, lettreCouleur);
 		perle.setAttribute('oncontextmenu', 'return false;');
-		perle.setAttribute('onmouseover', this.objectHook() + 'paintBead(this)');
+		perle.setAttribute('onmouseover', this.objectHook() + 'paintBead(this, false)');
 		return perle;
 	}
 
@@ -252,11 +252,15 @@ class Trame {
 	/**
 	 * Adds style to a bead
 	 * @param {HTMLElement} perle bead
+	 * @param {boolean} preventPatternDuplication variable used to prevent pattern
+	 *                                            to be applied multiple times
+	 * 																						(when event is fired on mouse down
+	 * 																						and re-fired on mouse over a re-rendered pattern)
 	 */
-	paintBead(perle) {
+	paintBead(perle, preventPatternDuplication) {
 		if (!isFocusDisplay) {
 			if (leftClickPressed && currentColor !== undefined) {
-				if (currentColor.includes('pattern-')) {
+				if (preventPatternDuplication && currentColor.includes('pattern-')) {
 					this.copyPatternToTab(perle);
 					this.generateBraceletCaneva();
 				} else {
@@ -304,6 +308,9 @@ class Trame {
 			deltaRow = iRowEnd - factory.patterns[patternNb].dimension.length;
 		}
 
+		// temporary table used in order for a pattern to not be infinitly applied to itself
+		let newPerlesPeintesTab = this.perlesPeintesTab.map(col => col.slice())
+
 		if (tissage === TISSAGE.DROIT || tissage === TISSAGE.PEYOTE) {
 			for (let iRow = iRowBegin; iRow < iRowEnd; iRow++) {
 				// extra col used for proper peyote pattern rendering
@@ -321,6 +328,7 @@ class Trame {
 							? 1
 							: 0;
 				}
+
 				for (let iCol = iColBegin; iCol < iColEnd; iCol++) {
 					// TODO remove extraCol from the for loop but add a max when used afterwards
 
@@ -337,7 +345,7 @@ class Trame {
 							] = patternColorKey;
 						} else {
 							this.initPerlesPeintesTabCurrentPreview();
-							this.perlesPeintesTab[iCol + extraCol][iRow] = patternColorKey;
+							newPerlesPeintesTab[iCol + extraCol][iRow] = patternColorKey;
 						}
 					}
 				}
@@ -370,12 +378,14 @@ class Trame {
 							] = patternColorKey;
 						} else {
 							this.initPerlesPeintesTabCurrentPreview();
-							this.perlesPeintesTab[iCol][iRow + extraRow] = patternColorKey;
+							newPerlesPeintesTab[iCol + extraCol][iRow] = patternColorKey;
 						}
 					}
 				}
 			}
 		}
+		
+		if (!preview) this.perlesPeintesTab = newPerlesPeintesTab.map(col => col.slice())
 	}
 
 	/**

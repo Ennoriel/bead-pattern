@@ -6,10 +6,10 @@
 document.addEventListener('mousedown', function (event) {
 	if (event.button == 0) {
 		leftClickPressed = true;
-		getFocusedBead(event.target)?.paintBead(event.target);
+		getFocusedBead(event.target)?.paintBead(event.target, true);
 	} else if (event.button == 2) {
 		rightClickPressed = true;
-		getFocusedBead(event.target)?.paintBead(event.target);
+		getFocusedBead(event.target)?.paintBead(event.target, false);
 	}
 });
 
@@ -27,24 +27,25 @@ document.addEventListener('mouseup', function (event) {
 
 /**
  * Reset the trame preview if the mouse pointer leaves a trame
+ * The way the event works is that it stores the previous element as a variable of a singleton
  */
-document.addEventListener('mouseover', () => {
-	let isPreviousElementABead = false;
+document.addEventListener('mouseover', function () {
+	let lastTrameHovered = undefined;
+
 	return function (event) {
 		if (!isFocusDisplay) {
-			if (isPreviousElementABead) {
+			if (lastTrameHovered) {
 				if (!event.target.getAttribute('class')?.split(' ').includes('color-bead')) {
-					let trameAttachedToBead = getTrameAttachedToBead(event.target);
-					trameAttachedToBead?.generateBraceletCaneva();
-					trameAttachedToBead?.initPerlesPeintesTabCurrentPreview();
-					isPreviousElementABead = false;
+					lastTrameHovered?.generateBraceletCaneva();
+					lastTrameHovered?.initPerlesPeintesTabCurrentPreview();
+					lastTrameHovered = undefined;
 				}
 			} else if (event.target.getAttribute('class')?.split(' ').includes('color-bead')) {
-				isPreviousElementABead = true;
+				lastTrameHovered = getTrameAttachedToBead(event.target);
 			}
 		}
 	};
-})
+}())
 
 /**
  * Check if the element is a colorable bead and if so,
