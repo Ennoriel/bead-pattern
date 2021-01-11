@@ -3,6 +3,8 @@
  * @param {string} lang language code [available: fr en] 
  */
 function loadLanguage(lang) {
+	language = lang
+	document.getElementById('lang-svg').src = `public/lang/${lang}.svg`
 	fetch('./public/lang/' + lang + '.json')
 		.then(response => response.json())
 		.then(json => {
@@ -14,4 +16,7 @@ function loadLanguage(lang) {
 						.setAttribute('placeholder', json[key]);
 			}
 		});
+		if(colorPicker && colorPicker.beadPanel) {
+			colorPicker.beadPanel.initFilters()
+		}
 }

@@ -219,8 +219,8 @@ input[type='radio'] {
 	width: calc(100vw - 20px);
 	height: 30px;
 	top: 20px;
-	background-color: white;
-	margin: 0 10px;
+	background-color: #f6f6f6;
+	padding: 0 10px 3px 10px;
 	z-index: 2;
 }
 

@@ -1,0 +1,69 @@
+[
+	{
+		"id": "c",
+		"label": "Couleur",
+		"entries": [
+			"Beige",
+			"Noir",
+			"Bleu",
+			"Marron",
+			"Cristal",
+			"Or",
+			"Gris",
+			"Vert",
+			"Iridescent",
+			"Mélange",
+			"Orange",
+			"Rose",
+			"Violet",
+			"Rouge",
+			"Argent",
+			"Blanc",
+			"Jaune"
+		]
+	},
+	{
+		"id": "g",
+		"label": "Transparence",
+		"entries": ["Albâtre", "Opaque", "Soie", "Transparent"]
+	},
+	{
+		"id": "f",
+		"label": "Finition (Intraduisible...)",
+		"entries": [
+			"Color-Lined",
+			"Copperline",
+			"Duracoat",
+			"Frosted (Matte)",
+			"Galvanized",
+			"Glass enamel",
+			"Glazed",
+			"Glazed Luster",
+			"Gold Luster",
+			"Goldline",
+			"Luster",
+			"Metallic",
+			"Non-Extra Finish",
+			"Outside-Dyed",
+			"Plating",
+			"Rainbow",
+			"Silverline",
+			"Special Coating"
+		]
+	},
+	{
+		"id": "d",
+		"label": "Teinte",
+		"entries": ["« Color-Lined »", "Duracoat", "Non teint", "Tseint"]
+	},
+	{
+		"id": "z",
+		"label": "Galvanisation",
+		"entries": ["Duracoat", "Galvanisé", "Non Galvanisé"]
+	},
+	{
+		"id": "p",
+		"label": "Plaquage",
+		"entries": ["Cuivre", "Or", "Nickel", "Non plaqué", "Palladium", "Argent"]
+	}
+]

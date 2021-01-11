@@ -22,6 +22,9 @@ var isFocusDisplay;
 // trame factory, handles action on trames
 var factory;
 
+// language
+var language;
+
 /**
  * bead collection, array of
  *   {

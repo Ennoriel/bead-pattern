@@ -9,5 +9,9 @@
 	"label-focus-display": "Focus",
 	"label-unfocus-display": "Travail",
 
+	"label-dev-info-1": "Ce site est en cours de développement.",
+	"label-dev-info-2": "Vous pouvez me donner votre avis par mail : emixamdupont@gmail.com",
+	"label-dev-info-3": "Si vous souhaitez m'aider à traduire le site, merci de me contacter par mail: emixamdupont@gmail.com",
+
 	"placeholder-import-input": "Copier la sauvegarder"
 }

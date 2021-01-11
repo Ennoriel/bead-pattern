@@ -19,7 +19,7 @@ class BeadPanel {
 	 */
 	async initFilters() {
 		this.selectedFilters = [];
-		await fetch('./public/filters.json')
+		await fetch(`./public/filters-${language}.json`)
 			.then(response => response.json())
 			.then(filters => {
 				this.filters = filters;
@@ -43,7 +43,15 @@ class BeadPanel {
 
 			filterPanel.append(title);
 
-			filter.entries.forEach((filterEntry, entryIndex) => {
+			filter.entries.
+			// map() and sort() used to sort filters according to the language but keep the default indexes (english order)
+				map((filterEntry, entryIndex) => ({filterEntry, entryIndex}))
+				.sort((a, b) => a.filterEntry.localeCompare(b.filterEntry))
+				.forEach(entry => {
+
+				let filterEntry = entry.filterEntry
+				let entryIndex = entry.entryIndex
+
 				let input = document.createElement('input');
 				input.type = 'checkbox';
 				input.addEventListener('click', () => this.handleFilterChange(filterIndex, entryIndex));
