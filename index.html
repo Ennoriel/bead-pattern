@@ -157,14 +157,15 @@
 					class="form-input"
 					type="text"
 					autocomplete="off"
-					placeholder="Coller la sauvegarde"
+					placeholder="Nom du fichier"
 				/>
-				<span id="import-pattern" class="menu-item" onclick="importWork()">
+				<span id="import-pattern" class="menu-item" onclick="openImport(event)">
 					<img src="public/icons/upload.svg" name="upload" />
 					<label id="label-upload" class="menu-label menu-label-h" for="upload"
 						>charger</label
 					>
 				</span>
+				<input type="file" id="file-load-input" accept=".txt" onchange="importWork(event)" />
 			</span>
 
 			<span class="menu-block">

@@ -8,8 +8,26 @@ function exportWork() {
   exportString += this.exportBracelet();
   exportString += ';';
   exportString += this.exportPatterns();
-  document.getElementById('import-input').value = exportString;
-  document.getElementById('import-input').select();
+  
+  let fileName = document.getElementById('import-input').value || `export-${Math.floor(Math.random() * 65536).toString(16)}`
+  if (!fileName.endsWith('.txt')) fileName += '.txt'
+
+  downloadFile(exportString, fileName)
+}
+
+/**
+ * Dynamiccaly generates and download a file
+ * @param {String} fileContent file content
+ * @param {String} fileName filename
+ */
+function downloadFile(fileContent, fileName) {
+  var element = document.createElement('a');
+  element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(fileContent));
+  element.setAttribute('download', fileName);
+  element.style.display = 'none';
+  document.body.appendChild(element);
+  element.click();
+  document.body.removeChild(element);
 }
 
 /**
@@ -34,10 +52,20 @@ function exportPatterns() {
 }
 
 /**
+ * Fire the click on the file input
+ */
+function openImport(event) {
+  document.getElementById('file-load-input').click()
+  event.preventDefault()
+}
+
+/**
  * Launches import bracelet from text input
  */
-function importWork() {
-  let exportString = document.getElementById('import-input').value;
+async function importWork(event) {
+  const file = event.target.files.item(0)
+  const exportString = await file.text();
+  
   let exportTab = exportString.split(';');
   this.importBracelet(exportTab[0], exportTab[1]);
   this.importPatterns(exportTab[2]);
