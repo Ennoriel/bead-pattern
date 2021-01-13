@@ -45,11 +45,28 @@ class Factory {
 	 * Generates the main bracelet
 	 */
 	generateBracelet() {
-		let braceletDimension = new Dimension(
-			document.getElementById('input-largeur').value,
-			document.getElementById('input-longueur').value
-		);
-		this.bracelet.generateTrame(braceletDimension);
+
+		let fileName = localStorage.getItem('__current_work__')
+		let exportedString
+
+		if (fileName) {
+			exportedString = localStorage.getItem(fileName)
+		}
+
+		if (exportedString) {
+			importWork(exportedString, fileName)
+		} else {
+			let braceletDimension = new Dimension(
+				document.getElementById('input-largeur').value,
+				document.getElementById('input-longueur').value
+			);
+			if (braceletDimension.length * braceletDimension.width > 10000) {
+				alert('Le bracelet à générer est trop grand (longueur x largeur < 10 000)');
+				return;
+			}
+			this.bracelet.generateTrame(braceletDimension);
+			document.getElementById('import-input').value = ''
+		}
 	}
 
 	/**

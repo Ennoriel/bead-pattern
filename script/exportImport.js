@@ -1,5 +1,29 @@
 
 /**
+ * Save current work to local storage: the trame, patterns and color
+ */
+function saveWork() {
+  let exportString = this.exportColors();
+  exportString += ';';
+  exportString += this.exportBracelet();
+  exportString += ';';
+  exportString += this.exportPatterns();
+  
+  let fileName = document.getElementById('import-input').value || `export-${Math.floor(Math.random() * 65536).toString(16)}`
+
+  fileName = fileName.replace(';', '_')
+
+  saves = localStorage.getItem('__save__')
+  if (!saves) {
+    saves = fileName
+  } else if(!saves.split(";").includes(fileName)) {
+    saves += ";" + fileName
+  }
+  localStorage.setItem('__save__', saves)
+  localStorage.setItem(fileName, exportString)
+}
+
+/**
  * Exports current work: the trame, patterns and color
  */
 function exportWork() {
@@ -60,12 +84,28 @@ function openImport(event) {
 }
 
 /**
- * Launches import bracelet from text input
+ * Launches import bracelet from file event
+ * @param {InputEvent} event fileEvent
  */
-async function importWork(event) {
+async function importWorkFromFile(event) {
   const file = event.target.files.item(0)
   const exportString = await file.text();
   
+  importWork(exportString);
+}
+
+/**
+ * Launches import bracelet from text input
+ * @param {String} exportString exported string
+ * @param {String} fileName file name
+ */
+async function importWork(exportString, fileName) {
+
+  if (fileName) {
+    document.getElementById('import-input').value = fileName
+    localStorage.removeItem('__current_work__')
+  }
+
   let exportTab = exportString.split(';');
   this.importBracelet(exportTab[0], exportTab[1]);
   this.importPatterns(exportTab[2]);

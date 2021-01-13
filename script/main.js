@@ -66,3 +66,13 @@ function initTissage() {
 function initFactory() {
 	factory = new Factory();
 }
+
+/**
+ * Handle saving if asked and go to menu
+ */
+function goBack() {
+	if (confirm(translations['confirm-save'])) {
+		saveWork()
+	}
+	window.location.href = '/menu';
+}

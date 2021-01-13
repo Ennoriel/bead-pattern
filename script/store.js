@@ -24,6 +24,7 @@ var factory;
 
 // language
 var language;
+var translations;
 
 /**
  * bead collection, array of

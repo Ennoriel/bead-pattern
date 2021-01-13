@@ -11,7 +11,6 @@ function addClassname(element, classname) {
 	}
 }
 
-
 /**
  * Remove the classname of the element
  * @param {HTMLElement} element 
@@ -31,6 +30,20 @@ function removeClassname(element, classname) {
 				.filter(actualClass => actualClass !== classname)
 				.join(' ')
 		);
+	}
+}
+
+/**
+ * Check if a classname is present
+ * @param {HTMLElement} element 
+ * @param {String} classname 
+ */
+function hasClassname(element, classname) {
+	actualClasses = element.getAttribute('class');
+	if (!actualClasses) {
+		return false;
+	} else if (classname === actualClasses.trim() || actualClasses.split(' ').includes(classname)) {
+		return true;
 	}
 }
 

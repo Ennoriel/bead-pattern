@@ -1,10 +1,12 @@
 {
+	"label-go-back": "Back to menu",
 	"label-bracelet-droit": "Linear weaving",
 	"label-bracelet-deyote": "Peyote weaving",
 	"label-bracelet-peyote-v": "Vertical Peyote weaving",
 	"label-create-bracelet": "New",
 	"label-generate-pattern": "Add a patern",
-	"label-download": "Save",
+	"label-save": "Save",
+	"label-download": "Export",
 	"label-upload": "Load",
 	"label-focus-display": "Focus display",
 	"label-unfocus-display": "Work display",

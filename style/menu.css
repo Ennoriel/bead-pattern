@@ -1,0 +1,75 @@
+* {
+	scrollbar-color: gray lightgray;
+	scrollbar-width: thin;
+}
+
+a:visited {
+  color: black;
+}
+
+body {
+  font-family: Raleway;
+}
+
+body, #content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#content {
+  width: 100%;
+}
+
+.card {
+  background-color: #eee;
+  margin: 10px;
+  padding: 10px;
+  width: 60%;
+}
+
+img {
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+.show-preview {
+  transition-duration: 0.6s;
+  transform: scaleY(-1);
+}
+
+.preview {
+  width: 450px;
+  transition-duration: 0.6s;
+  height: 0;
+  background-color: white;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.preview-displayed .preview {
+  height: 150px;
+}
+
+.preview-displayed .show-preview {
+  transform: scaleY(1);
+}
+
+#header {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+#header h1 {
+  cursor: pointer;
+}
+
+#content h1 {
+  margin: 0;
+}
+
+h1 {
+  display: inline-block;
+  font-size: 20px;
+  margin-right: 5px;
+}

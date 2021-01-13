@@ -33,6 +33,19 @@
 		</div>
 		<div id="menu-bar">
 			<span class="menu-block">
+				<span class="menu-item" onclick="goBack()">
+					<img src="public/icons/corner-down-left.svg" name="go-back" />
+					<label
+						id="label-go-back"
+						class="menu-label menu-label-h"
+						for="go-back"
+					>
+						Retour au menu
+					</label>
+				</span>
+			</span>
+
+			<span class="menu-block">
 				<span class="menu-item">
 					<input
 						type="radio"
@@ -146,10 +159,16 @@
 			</span>
 
 			<span class="menu-block">
+				<span id="save-pattern" class="menu-item" onclick="saveWork()">
+					<img src="public/icons/save.svg" name="save" />
+					<label id="label-save" class="menu-label menu-label-h" for="save">
+						Sauvegarder
+					</label>
+				</span>
 				<span id="export-pattern" class="menu-item" onclick="exportWork()">
 					<img src="public/icons/download.svg" name="download" />
 					<label id="label-download" class="menu-label menu-label-h" for="download">
-						sauvegarder
+						Exporter
 					</label>
 				</span>
 				<input
@@ -162,10 +181,10 @@
 				<span id="import-pattern" class="menu-item" onclick="openImport(event)">
 					<img src="public/icons/upload.svg" name="upload" />
 					<label id="label-upload" class="menu-label menu-label-h" for="upload"
-						>charger</label
+						>Charger</label
 					>
 				</span>
-				<input type="file" id="file-load-input" accept=".txt" onchange="importWork(event)" />
+				<input type="file" id="file-load-input" accept=".txt" onchange="importWorkFromFile(event)" />
 			</span>
 
 			<span class="menu-block">
