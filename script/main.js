@@ -74,5 +74,5 @@ function goBack() {
 	if (confirm(translations['confirm-save'])) {
 		saveWork()
 	}
-	window.location.href = '/menu';
+	window.location.href = './menu';
 }

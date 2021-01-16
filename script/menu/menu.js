@@ -38,7 +38,7 @@ function deleteAll() {
  */
 function edit(fileName) {
   localStorage.setItem('__current_work__', fileName);
-  window.location.href = '/';
+  window.location.href = './';
 }
 
 /**
