@@ -1,5 +1,13 @@
 
 /**
+ * Export format :
+ * A-...;D-E-F-G(;H-I-J)...
+ *   |       |      |=> H-I : pattern dimension - J : beads (a is first color...)
+ *   |       |=> D : bracelet weaving - E-F : bracelet dimension - G : beads (a is first color...)
+ *   |=> colors (first is a, second b...)
+ */
+
+/**
  * Save current work to local storage: the trame, patterns and color
  */
 function saveWork() {

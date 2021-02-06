@@ -11,11 +11,13 @@ function main() {
       <h1>${fileName}</h1>
       <img onClick="edit('${fileName}')" src="public/icons/edit.svg" name="edition" />
       <img onClick="display('${index}')" class="show-preview" src="public/icons/chevron-up.svg" />
-      <div class="preview"></div>
+      <div id="preview-${index}" class="preview"></div>
     </div>`
   );
 
   document.getElementById('content').innerHTML += html.join('');
+
+  fileNames.split(';').forEach((_, i) => display(i))
 }
 
 /**
@@ -53,4 +55,23 @@ function display(index) {
   } else {
     addClassname(preview, 'preview-displayed')
   }
+
+  svgPreview = new SvgPreview(index);
+  
+  savedWork = getSavedWord(index);
+  if (savedWork) {
+    color = savedWork.split(';')[0]
+    tissage = savedWork.split(';')[1].split('-')[0]
+    dimension = new Dimension(...savedWork.split(';')[1].split('-').slice(1, 3))
+    bracelet = savedWork.split(';')[1].split('-')[3]
+    svgPreview.renderPreview(color, tissage, dimension, bracelet)
+  }
+}
+
+function getSavedWord(index) {
+  fileNames = localStorage.getItem('__save__');
+
+  if (fileNames) fileNames = fileNames.split(';');
+  
+  if (fileNames.length >= index) return localStorage.getItem(fileNames[index])
 }

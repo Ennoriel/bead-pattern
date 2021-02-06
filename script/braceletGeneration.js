@@ -519,6 +519,47 @@ class Trame {
 	}
 }
 
+class SvgPreview extends Trame {
+
+	constructor (index) {
+		super(`preview-${index}`)
+	}
+
+	renderPreview (color, tissage, dimension, bracelet) {
+		let colors = color.split('-')
+		this.dimension = dimension
+		this.initPerlesPeintes(bracelet)
+
+		let colorBeadsArray = Array.from({length: colors.length}, () => [])
+
+		this.perlesPeintesTab.forEach((col, iCol) => {
+			col.forEach((bead, iRow) => {
+				if(bead) colorBeadsArray[bead.charCodeAt(0) - 97].push({iCol, iRow})
+			})
+		})
+
+		let beadSize = Math.floor(Math.min(150 / this.dimension.width, 450 / this.dimension.length))
+
+		let html = 
+		`<svg 
+			viewBox="0 0 ${beadSize * (this.dimension.length + (tissage === "2" ? 0.5 : 0)	)} ${beadSize * (this.dimension.width + (tissage === "3" ? 0.5 : 0)	)}"
+			xmlns="http://www.w3.org/2000/svg">` +
+				colorBeadsArray.reduce((accArray, colorBeads, index) => {
+					return (
+						accArray + 
+						`<g fill="${colors[index]}">` +
+							colorBeads.reduce((acc, bead) => {
+								return acc + `<rect x="${beadSize * (bead.iCol + (tissage === "2" && bead.iRow % 2 === 1 ? 0.5 : 0))}" y="${beadSize * (bead.iRow + (tissage === "3" && bead.iCol % 2 === 1 ? 0.5 : 0))}" width="${beadSize}" height="${beadSize}" />`
+							}, "") +
+						`</g>`
+					)
+				}, "") +
+		`</svg>`
+
+		document.getElementById(this.htmlIdHook).innerHTML = html
+	}
+}
+
 /**
  * class for the Bracelet
  * @property {String} containerHtmlIdHook html id of the bracelet container
