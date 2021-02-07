@@ -81,7 +81,7 @@ function display(index) {
  * @param {Integer|String} index index of the preview to display
  */
 function deleteSave(index) {
-  confirm('Etes-vous sûr de vouloir regénérer la trame du bracelet ?') {
+  if(confirm('Etes-vous sûr de vouloir supprimer le pattern ?')) {
     fileName = getSavedName(index)
     if (fileName) {
       fileNames = localStorage.getItem('__save__');
