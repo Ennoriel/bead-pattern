@@ -2,20 +2,27 @@
  * Inits all scripts
  */
 function main() {
-	initColors();
-	initMouse();
-	initTissage();
-	initDimension();
-	initFactory();
-	initColorPicker();
-	loadLanguage('fr');
+	initBeadCollection().then(() => {
+		initColors();
+		initMouse();
+		initTissage();
+		initDimension();
+		initFactory();
+		initColorPicker();
+		loadLanguage('fr');
+		factory.generateBracelet();
+		importIncludeElements();
+	})
 }
 
 /**
- * Inits color picker
+ * Inits the bead collection store variable
  */
-function initColorPicker() {
-	colorPicker = new ColorPickerHandler('color-picker');
+async function initBeadCollection() {
+	return fetch('./public/beads.json')
+				.then(response => response.json())
+				.then(beads => beads.map(bead => new DbColor(bead)))
+				.then(beads => beadCollection = beads)
 }
 
 /**
@@ -37,17 +44,6 @@ function initMouse() {
 }
 
 /**
- * Inits the main bracelet dimension
- */
-function initDimension() {
-	document.getElementById('input-largeur').value = 6;
-	document.getElementById('input-longueur').value = 6;
-
-	computeLengthHint();
-	computeWidthHint();
-}
-
-/**
  * Inits the tissage variable
  */
 function initTissage() {
@@ -61,10 +57,28 @@ function initTissage() {
 }
 
 /**
+ * Inits the main bracelet dimension
+ */
+function initDimension() {
+	document.getElementById('input-largeur').value = 6;
+	document.getElementById('input-longueur').value = 6;
+
+	computeLengthHint();
+	computeWidthHint();
+}
+
+/**
  * Inits the factory
  */
 function initFactory() {
 	factory = new Factory();
+}
+
+/**
+ * Inits color picker
+ */
+function initColorPicker() {
+	colorPicker = new ColorPickerHandler('color-picker');
 }
 
 /**

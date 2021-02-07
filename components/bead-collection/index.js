@@ -72,9 +72,6 @@ class BeadPanel {
 	 * Inits beads attribute and then calls the rendering method
 	 */
 	async initBeads() {
-		beadCollection = (await fetch('./public/beads.json')
-														.then(response => response.json()))
-														.map(bead => new DbColor(bead));
 		this.renderBeadThumbails();
 	}
 
