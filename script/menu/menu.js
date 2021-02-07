@@ -16,6 +16,7 @@ function main() {
         <h1>${fileName}</h1>
         <img onClick="edit('${fileName}')" src="public/icons/edit.svg" name="edition" />
         <img onClick="display('${index}')" class="show-preview" src="public/icons/chevron-up.svg" />
+        <img onClick="deleteSave('${index}')" class="show-preview" src="public/icons/x.svg" />
         <div id="preview-${index}" class="preview"></div>
       </div>`
     );
@@ -65,7 +66,7 @@ function display(index) {
 
   svgPreview = new SvgPreview(index);
   
-  savedWork = getSavedWord(index);
+  savedWork = getSavedWork(index);
   if (savedWork) {
     color = savedWork.split(';')[0]
     tissage = savedWork.split(';')[1].split('-')[0]
@@ -75,10 +76,38 @@ function display(index) {
   }
 }
 
-function getSavedWord(index) {
-  fileNames = localStorage.getItem('__save__');
+/**
+ * After confirmation, deletes the saved work
+ * @param {Integer|String} index index of the preview to display
+ */
+function deleteSave(index) {
+  confirm('Etes-vous sûr de vouloir regénérer la trame du bracelet ?') {
+    fileName = getSavedName(index)
+    if (fileName) {
+      fileNames = localStorage.getItem('__save__');
+      fileNames = fileNames.split(";").filter(fn => fn !== fileName).join(";")
+      if (fileNames) localStorage.setItem('__save__', fileNames);
+      localStorage.removeItem(fileName)
+    }
+    document.getElementById(`card-${index}`).remove()
+  }
+}
 
+/**
+ * Get saved work name
+ * @param {Integer|String} index index of the preview to display
+ */
+function getSavedName(index) {
+  fileNames = localStorage.getItem('__save__');
   if (fileNames) fileNames = fileNames.split(';');
-  
-  if (fileNames.length >= index) return localStorage.getItem(fileNames[index])
+  if (fileNames.length >= index) return fileNames[index]
+}
+
+/**
+ * Get saved work exported string
+ * @param {Integer|String} index index of the preview to display
+ */
+function getSavedWork(index) {
+  fileName = getSavedName(index)
+  if (fileName) return localStorage.getItem(fileName)
 }
