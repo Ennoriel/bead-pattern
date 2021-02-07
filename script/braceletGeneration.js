@@ -526,7 +526,7 @@ class SvgPreview extends Trame {
 	}
 
 	renderPreview (color, tissage, dimension, bracelet) {
-		let colors = color.split('-')
+		let colors = color.split('-').map(c => Color.newInstance(c))
 		this.dimension = dimension
 		this.initPerlesPeintes(bracelet)
 
@@ -547,7 +547,7 @@ class SvgPreview extends Trame {
 				colorBeadsArray.reduce((accArray, colorBeads, index) => {
 					return (
 						accArray + 
-						`<g fill="${colors[index]}">` +
+						`<g fill="${colors[index].inputColor}">` +
 							colorBeads.reduce((acc, bead) => {
 								return acc + `<rect x="${beadSize * (bead.iCol + (tissage === "2" && bead.iRow % 2 === 1 ? 0.5 : 0))}" y="${beadSize * (bead.iRow + (tissage === "3" && bead.iCol % 2 === 1 ? 0.5 : 0))}" width="${beadSize}" height="${beadSize}" />`
 							}, "") +

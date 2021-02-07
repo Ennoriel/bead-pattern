@@ -1,23 +1,30 @@
+var beadCollection
+
 /**
  * Inits the menu
  */
 function main() {
-  fileNames = localStorage.getItem('__save__');
 
-  if (!fileNames) return;
+  Color.initBeadCollection().then(() => {
+  
+    fileNames = localStorage.getItem('__save__');
 
-  html = fileNames.split(';').map((fileName, index) =>
-    `<div id="card-${index}" class="card">
-      <h1>${fileName}</h1>
-      <img onClick="edit('${fileName}')" src="public/icons/edit.svg" name="edition" />
-      <img onClick="display('${index}')" class="show-preview" src="public/icons/chevron-up.svg" />
-      <div id="preview-${index}" class="preview"></div>
-    </div>`
-  );
+    if (!fileNames) return;
 
-  document.getElementById('content').innerHTML += html.join('');
+    html = fileNames.split(';').map((fileName, index) =>
+      `<div id="card-${index}" class="card">
+        <h1>${fileName}</h1>
+        <img onClick="edit('${fileName}')" src="public/icons/edit.svg" name="edition" />
+        <img onClick="display('${index}')" class="show-preview" src="public/icons/chevron-up.svg" />
+        <div id="preview-${index}" class="preview"></div>
+      </div>`
+    );
 
-  fileNames.split(';').forEach((_, i) => display(i))
+    document.getElementById('content').innerHTML += html.join('');
+
+    fileNames.split(';').forEach((_, i) => display(i))
+
+  })
 }
 
 /**

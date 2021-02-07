@@ -2,7 +2,7 @@
  * Inits all scripts
  */
 function main() {
-	initBeadCollection().then(() => {
+	Color.initBeadCollection().then(() => {
 		initColors();
 		initMouse();
 		initTissage();
@@ -15,15 +15,15 @@ function main() {
 	})
 }
 
-/**
- * Inits the bead collection store variable
- */
-async function initBeadCollection() {
-	return fetch('./public/beads.json')
-				.then(response => response.json())
-				.then(beads => beads.map(bead => new DbColor(bead)))
-				.then(beads => beadCollection = beads)
-}
+// /**
+//  * Inits the bead collection store variable
+//  */
+// async function initBeadCollection() {
+// 	return fetch('./public/beads.json')
+// 				.then(response => response.json())
+// 				.then(beads => beads.map(bead => new DbColor(bead)))
+// 				.then(beads => beadCollection = beads)
+// }
 
 /**
  * Inits the color map

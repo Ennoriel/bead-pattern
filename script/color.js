@@ -15,6 +15,16 @@ class Color {
       return new HexColor(stringColor)
     }
   }
+
+  /**
+   * Inits the color bead variable
+   */
+  static initBeadCollection() {
+    return fetch('./public/beads.json')
+          .then(response => response.json())
+          .then(beads => beads.map(bead => new DbColor(bead)))
+          .then(beads => beadCollection = beads)
+  }
 }
 
 class HexColor extends Color {
