@@ -2,6 +2,9 @@
 const TISSAGE = Object.freeze({ DROIT: 1, PEYOTE: 2, PEYOTE_V: 3 });
 var tissage;
 
+const PERLES_AND_CO = "https://www.perlesandco.com"
+const AFFILIATE_PARAM = "affiliate_banner_id=1&ref=2481"
+
 // letters, used to mark bead with a distinctive letter. Each letter matches a color
 var alphabet;
 // array of colors chosen by the user
@@ -27,17 +30,6 @@ var language;
 var translations;
 
 /**
- * bead collection, array of
- *   {
- *     "i":"DB0001",  -- id
- *     "c":6,         -- Color         [may be a string or an array]
- *     "g":1,         -- Glass           | |
- *     "f":11,        -- Finish          | |
- *     "d":2,         -- Die             | |
- *     "z":2,         -- Galvanizing     | |
- *     "p":3,         -- Plating         | |
- *     "o":"#09090f", -- dominant color in the picture
- *     "m":"#d3d7e2"  -- lightest color of the 4 average colors in the picture
- *   }
+ * bead collection, array of DbColor
  */
 var beadCollection

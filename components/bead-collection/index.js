@@ -97,9 +97,15 @@ class BeadPanel {
 			let label = document.createElement('label');
 			label.innerHTML = bead.index;
 
+			let cartA = document.createElement('a')
+			if (bead.h) cartA.href = `${PERLES_AND_CO}/${bead.h}?${AFFILIATE_PARAM}`
+			cartA.target = "_blank"
+
 			let cart = document.createElement('img');
-			cart.addEventListener('click', () => alert('not yet implemented'));
-			cart.src = 'public/icons/shopping-cart.svg';
+			
+			cart.src = bead.h ? 'public/icons/shopping-cart.svg' : 'public/icons/cart-unavailable.svg';
+
+			cartA.append(cart)
 
 			let img = document.createElement('img');
 			img.loading = 'lazy';
@@ -107,7 +113,7 @@ class BeadPanel {
 			img.addEventListener('click', () => this.handleThumbnailClick(bead));
 
 			container.append(label);
-			container.append(cart);
+			container.append(cartA);
 			container.append(img);
 
 			thumbnailContainer.append(container);

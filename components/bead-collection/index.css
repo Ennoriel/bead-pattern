@@ -99,12 +99,12 @@
 	display: inline-block;
 }
 
-#thumbnails label + img {
+#thumbnails label + a img {
 	width: 12px;
 	float: right;
 }
 
-#thumbnails img + img {
+#thumbnails a + img {
 	width: 100%;
 	height: auto;
 }

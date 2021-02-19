@@ -53,6 +53,9 @@ class DbColor extends Color {
     // index
     this.index = dbBead.i
 
+    // affiliate link
+    this.h = dbBead.h
+
     // categories used for filtering
     this.c = dbBead.c
     this.g = dbBead.g
