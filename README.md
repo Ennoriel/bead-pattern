@@ -1,8 +1,6 @@
-# bead weaving pattern making
+Application pour concevoir des motifs de bracelet ou broche en perle ([lien de l'app](https://ennoriel.github.io/bead-pattern/)).
 
-Lightweight Single Page Application for making bead weaving patterns.
-
-# TOOD :
+## TODO :
 
     - [/] refactoring en composants js
     - [ ] gérer le CTRL+Z sur quelques générations
@@ -17,7 +15,7 @@ Lightweight Single Page Application for making bead weaving patterns.
     - [/] ajouter un ruban "en cours de dev"
     - [ ] rendre traduisible et traduire les filtres du beadpanel
 
-# BUG :
+## BUGS :
 
     - [/] copie de pattern peyote un rang sur deux
     - [/] sélection des perles peyotes, sans doute problématique à cause de la marge
@@ -36,7 +34,7 @@ Lightweight Single Page Application for making bead weaving patterns.
     - [/] l'affichage du conteneur des patterns et du bracelet à une marge inférieur
     - [/] lorsque l'on applique un pattern, la preview ne disparait pas toujours
 
-# CREDITS :
+## CREDITS :
 
     - [flags](https://github.com/hjnilsson/country-flags/)
     - [color picker](https://github.com/DavidDurman/FlexiColorPicker)
